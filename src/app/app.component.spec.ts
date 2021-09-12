@@ -9,10 +9,10 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
       ],
       declarations: [
-        AppComponent
+        AppComponent,
       ],
     }).compileComponents();
   });
@@ -27,7 +27,7 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'rs-shop'`, () => {
+  it('should have as title \'rs-shop\'', () => {
     expect(app.title).toEqual('rs-shop');
   });
 });

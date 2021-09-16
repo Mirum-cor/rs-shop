@@ -1,0 +1,59 @@
+.wrapper {
+  background: linear-gradient(
+    rgb(255, 255, 255) 0%,
+    rgb(216, 216, 216) 30%,
+    rgb(59, 116, 78) 90%
+  );
+}
+
+.contacts,
+.socials {
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.contacts li {
+  padding-left: 30px;
+}
+
+.a1 {
+  background: url(../../../assets/a1.svg) no-repeat left center;
+}
+
+.life {
+  background: url(../../../assets/life.svg) no-repeat left center;
+}
+
+.home {
+  background: url(../../../assets/home.svg) no-repeat left center;
+}
+
+.viber {
+  background: url(../../../assets/viber.svg) no-repeat left center;
+}
+
+.telegram {
+  background: url(../../../assets/telegram.svg) no-repeat left center;
+}
+
+.email {
+  background: url(../../../assets/email.svg) no-repeat left center;
+}
+
+.contacts li,
+.socials li {
+  transition: all 0.25s linear;
+}
+
+.contacts li:hover,
+.socials li:hover {
+  transform: scale(1.15);
+}
+
+@media screen and (max-width: 1015px) {
+  .contacts ul {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

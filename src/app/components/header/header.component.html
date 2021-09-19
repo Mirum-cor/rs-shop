@@ -1,8 +1,16 @@
-<div class="wrapper" (click)="toggleRestOfContacts($event)">
+<div class="wrapper" (click)="closeDropdowns()">
   <div class="container">
     <div class="info-block">
       <div class="current-place">
-        <p>(I'm here)</p>
+        <p #currentCity (click)="toggleBiggestCities($event)">Выберите свой город</p>
+        <div class="biggest-cities invisible" #biggestCities (click)="chooseCity($event)">
+          <p>Брест</p>
+          <p>Витебск</p>
+          <p>Гомель</p>
+          <p>Гродно</p>
+          <p>Минск</p>
+          <p>Могилёв</p>
+        </div>
       </div>
       <div class="contacts">
         <a href="https://chats.viber.com/21vek.by" target="_blank" class="viber">Viber</a>

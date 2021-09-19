@@ -16,9 +16,38 @@
 }
 
 .current-place {
+  position: relative;
   background: url(../../../assets/location.svg) no-repeat left center;
   background-size: 20px;
-  padding-left: 20px;
+  padding-left: 25px;
+}
+
+.current-place p {
+  cursor: pointer;
+}
+
+.biggest-cities,
+.rest-of-contacts {
+  position: absolute;
+  top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  background-color: rgba(59, 116, 78, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 0 10px #295036;
+  z-index: 5;
+}
+
+.biggest-cities,
+.rest-of-contacts,
+.contacts a {
+  transition: all 0.25s linear;
+}
+
+.biggest-cities {
+  left: 0;
 }
 
 .contacts {
@@ -84,21 +113,7 @@
 }
 
 .rest-of-contacts {
-  position: absolute;
-  top: 30px;
   left: -120px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 10px;
-  background-color: rgba(59, 116, 78, 0.9);
-  border-radius: 10px;
-  box-shadow: 0 0 10px #295036;
-}
-
-.rest-of-contacts,
-.contacts a {
-  transition: all 0.25s linear;
 }
 
 .contacts a:hover {

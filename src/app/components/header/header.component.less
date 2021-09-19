@@ -60,11 +60,18 @@
 .more-of-contacts,
 .more-of-contacts p {
   position: relative;
-  width: 200px;
+}
+
+.more-of-contacts {
+  width: 75px;
 }
 
 .more-of-contacts p {
   cursor: pointer;
+}
+
+.rest-of-contacts a {
+  width: 200px;
 }
 
 .more-of-contacts p:before {
@@ -79,15 +86,23 @@
 .rest-of-contacts {
   position: absolute;
   top: 30px;
-  left: -100px;
+  left: -120px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   padding: 10px;
-  background-color: rgba(59, 116, 78, 0.5);
+  background-color: rgba(59, 116, 78, 0.9);
   border-radius: 10px;
   box-shadow: 0 0 10px #295036;
+}
+
+.rest-of-contacts,
+.contacts a {
   transition: all 0.25s linear;
+}
+
+.contacts a:hover {
+  transform: scale(1.05);
 }
 
 .work-hours {
@@ -105,4 +120,58 @@
 
 .logo:hover {
   box-shadow: 5px 5px 5px #3b744e;
+}
+
+.categories-nav ul {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.categories-nav a {
+  position: relative;
+  display: inline-block;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 25px;
+  text-align: center;
+}
+
+.categories-nav a:after {
+  position: absolute;
+  content: "";
+  background-color: #1a2e28;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  transform: scaleX(0);
+  transition: all 0.25s linear;
+}
+
+.categories-nav li:hover > a:not(.active-link):after {
+  transform: scaleX(1);
+}
+
+@media screen and (max-width: 1200px) {
+  .info-block,
+  .nav-block,
+  .categories-nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+  }
+}
+
+@media screen and (max-width: 510px) {
+  .contacts {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+  }
+
+  .rest-of-contacts {
+    left: -75px;
+  }
 }

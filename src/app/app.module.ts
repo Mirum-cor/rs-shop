@@ -9,6 +9,13 @@ import { ProductCategoryComponent } from './components/product-category/product-
 import { ProductComponent } from './components/product/product.component';
 import { FooterComponent } from './components/footer/footer.component';
 
+import { HttpClientModule } from '@angular/common/http';
+import { DataService } from './services/data.service';
+import { NgxsModule } from '@ngxs/store';
+import { RSSState } from './store/rss.state';
+import { environment } from 'src/environments/environment';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,8 +28,13 @@ import { FooterComponent } from './components/footer/footer.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
+    NgxsModule.forRoot([RSSState], {
+      developmentMode: !environment.production,
+    }),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
   ],
-  providers: [],
+  providers: [DataService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

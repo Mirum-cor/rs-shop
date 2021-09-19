@@ -1,0 +1,108 @@
+.wrapper {
+  background: linear-gradient(
+    rgb(59, 116, 78) 0%,
+    rgb(216, 216, 216) 30%,
+    rgb(255, 255, 255) 90%
+  );
+}
+
+.info-block,
+.nav-block,
+.categories-nav {
+  padding: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.current-place {
+  background: url(../../../assets/location.svg) no-repeat left center;
+  background-size: 20px;
+  padding-left: 20px;
+}
+
+.contacts {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 70px;
+}
+
+.contacts a {
+  display: inline-block;
+  padding-left: 30px;
+}
+
+.a1 {
+  background: url(../../../assets/a1.svg) no-repeat left center;
+}
+
+.life {
+  background: url(../../../assets/life.svg) no-repeat left center;
+}
+
+.home {
+  background: url(../../../assets/home.svg) no-repeat left center;
+}
+
+.viber {
+  background: url(../../../assets/viber.svg) no-repeat left center;
+}
+
+.telegram {
+  background: url(../../../assets/telegram.svg) no-repeat left center;
+}
+
+.email {
+  background: url(../../../assets/email.svg) no-repeat left center;
+}
+
+.more-of-contacts,
+.more-of-contacts p {
+  position: relative;
+  width: 200px;
+}
+
+.more-of-contacts p {
+  cursor: pointer;
+}
+
+.more-of-contacts p:before {
+  content: " ";
+  position: absolute;
+  top: 8px;
+  left: 50px;
+  border: 4px solid transparent;
+  border-top: 5px solid;
+}
+
+.rest-of-contacts {
+  position: absolute;
+  top: 30px;
+  left: -100px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  background-color: rgba(59, 116, 78, 0.5);
+  border-radius: 10px;
+  box-shadow: 0 0 10px #295036;
+  transition: all 0.25s linear;
+}
+
+.work-hours {
+  background: url(../../../assets/clock.svg) no-repeat left center;
+  background-size: 50px;
+  padding: 5px 0 5px 55px;
+  width: 350px;
+}
+
+.logo {
+  width: 80px;
+  border-radius: 50%;
+  transition: all 0.25s linear;
+}
+
+.logo:hover {
+  box-shadow: 5px 5px 5px #3b744e;
+}

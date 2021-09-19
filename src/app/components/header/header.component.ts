@@ -55,8 +55,10 @@ export class HeaderComponent implements OnInit {
   closeDropdowns(): void {
     if (!this.restOfContacts.nativeElement.classList.contains('invisible')) {
       this.restOfContacts.nativeElement.classList.add('invisible');
+      this.restOfContacts.nativeElement.classList.remove('visible');
     } else if (!this.biggestCities.nativeElement.classList.contains('invisible')) {
       this.biggestCities.nativeElement.classList.add('invisible');
+      this.biggestCities.nativeElement.classList.remove('visible');
     }
   }
 
@@ -69,11 +71,17 @@ export class HeaderComponent implements OnInit {
 
   toggleBiggestCities(event: Event): void {
     this.biggestCities.nativeElement.classList.toggle('invisible');
+    this.biggestCities.nativeElement.classList.toggle('visible');
+    this.restOfContacts.nativeElement.classList.add('invisible');
+    this.restOfContacts.nativeElement.classList.remove('visible');
     event.stopPropagation();
   }
 
   toggleRestOfContacts(event: Event): void {
     this.restOfContacts.nativeElement.classList.toggle('invisible');
+    this.restOfContacts.nativeElement.classList.toggle('visible');
+    this.biggestCities.nativeElement.classList.add('invisible');
+    this.biggestCities.nativeElement.classList.remove('visible');
     event.stopPropagation();
   }
 }

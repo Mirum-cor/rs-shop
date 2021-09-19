@@ -37,7 +37,6 @@
   background-color: rgba(59, 116, 78, 0.9);
   border-radius: 10px;
   box-shadow: 0 0 10px #295036;
-  z-index: 5;
 }
 
 .biggest-cities,
@@ -179,13 +178,21 @@
   }
 }
 
+@media screen and (max-width: 530px) {
+  .rest-of-contacts {
+    left: -150px;
+  }
+}
+
 @media screen and (max-width: 510px) {
   .contacts {
     flex-wrap: wrap;
     justify-content: center;
     gap: 30px;
   }
+}
 
+@media screen and (max-width: 430px) {
   .rest-of-contacts {
     left: -75px;
   }

@@ -5,13 +5,14 @@ import { IAllGoods } from '../services/all-goods.interface';
 import { ICategory } from '../services/category.interface';
 import { DataService } from '../services/data.service';
 import { IProduct } from '../services/product.interface';
-import { GetCategories, GetGoods, GetMainGoods } from './rss.action';
+import { GetCategories, GetGoods, GetMainGoods, GetPopularGoods } from './rss.action';
 import { IState } from './rss.interface';
 
 const initialState: IState = {
   categories: [],
   goods: {},
   mainGoods: [],
+  popularGoods: [],
 };
 
 @State<IState>({
@@ -53,7 +54,7 @@ export class RSSState {
     const mainSliderGoods: IProduct[] = [];
     return this.dataService.getAllGoods().pipe(
       tap((result: any) => {
-        Object.values(result).map((category: any) => {
+        Object.values(result).forEach((category: any) => {
           const subcategory: any[] = Object.values(category);
           const product = Object.values(subcategory)[0][0];
           mainSliderGoods.push(product);
@@ -62,6 +63,35 @@ export class RSSState {
         patchState({
           ...state,
           mainGoods: mainSliderGoods,
+        });
+      })
+    );
+  }
+
+  @Action(GetPopularGoods)
+  getPopularGoods({ getState, patchState }: StateContext<IState>) {
+    let popularSliderGoods: IProduct[] = [];
+    const MAX_GOODS_AMOUNT = 30;
+    return this.dataService.getAllGoods().pipe(
+      tap((result: any) => {
+        Object.values(result).forEach((category: any) => {
+          const subcategories: any[] = Object.values(category);
+          subcategories.forEach((subcategory) => {
+            for (let i = 0; i < subcategory.length; i++) {
+              if (popularSliderGoods.length < MAX_GOODS_AMOUNT) {
+                if(subcategory[i].rating >= 4) {
+                  popularSliderGoods.push(subcategory[i]);
+                }
+              } else {
+                break;
+              }
+            }
+          });
+        });
+        const state = getState();
+        patchState({
+          ...state,
+          popularGoods: popularSliderGoods,
         });
       })
     );
@@ -80,5 +110,10 @@ export class RSSState {
   @Selector()
   public static mainGoods(state: IState): IProduct[] {
     return state.mainGoods;
+  }
+
+  @Selector()
+  public static popularGoods(state: IState): IProduct[] {
+    return state.popularGoods;
   }
 }

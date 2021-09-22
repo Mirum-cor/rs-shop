@@ -6,4 +6,5 @@ export interface IState {
   categories: ICategory[];
   goods: IAllGoods;
   mainGoods: IProduct[];
+  popularGoods: IProduct[];
 }

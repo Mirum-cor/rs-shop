@@ -16,3 +16,8 @@ export class GetMainGoods {
   static readonly type = '[RSS] Load Goods for Main Slider';
   constructor(public mainGoods: IProduct[]) {}
 }
+
+export class GetPopularGoods {
+  static readonly type = '[RSS] Load Popular Goods for Slider';
+  constructor(public popularGoods: IProduct[]) {}
+}

@@ -1,6 +1,6 @@
 <div class="container">
   <div class="main-slider">
-    <div class="slider-wrapper">
+    <div class="slider-wrapper" #mainSliderWrapper>
       <a
         [routerLink]="['product', product.id]"
         class="product-wrapper"
@@ -21,7 +21,7 @@
         </div>
       </a>
     </div>
-    <div class="slider-btns">
+    <div class="slider-btns" #mainSliderBtnsDiv>
       <button
         *ngFor="let product of mainGoods$ | async; let i = index"
         [class.active]="i ? false : true"
@@ -30,6 +30,38 @@
       ></button>
     </div>
   </div>
+  <h2>Популярные товары</h2>
+  <div class="popular-slider">
+    <div class="slider-wrapper">
+      <div class="inner-wrapper" #innerPopularSliderWrapper>
+        <a
+          [routerLink]="['product', product.id]"
+          class="popular-product-wrapper"
+          *ngFor="let product of popularGoods$ | async; let i = index"
+          >
+          <img
+            src="{{
+              product.imageUrls[0] ?? '../../../../../assets/no-img.jpeg'
+            }}"
+            alt="{{ product.name }}"
+          />
+          <div class="product-description">
+            <h2>{{ product.name }}</h2>
+            <h3>{{ product.price }} BYN</h3>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="slider-btns" #popularSliderBtnsDiv>
+      <button
+        *ngFor="let product of mainGoods$ | async; let i = index"
+        [class.active]="i ? false : true"
+        id="{{ i }}-popular-slider"
+        (click)="showPopularGoodsSliderProduct($event)"
+      ></button>
+    </div>
+  </div>
+
   <div class="advantages">
     <h2>Возможности и преимущества</h2>
     <ul>

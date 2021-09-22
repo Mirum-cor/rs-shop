@@ -9,8 +9,13 @@ import { ROOT_REQUEST_URL } from '../utils/utilities';
 export class DataService {
   constructor(private http: HttpClient, private store: Store) { }
 
-  getHttpResponse(requestQuery: string) {
-    const responseUrl = `${ROOT_REQUEST_URL}/${requestQuery}`;
+  getCategories() {
+    let responseUrl = `${ROOT_REQUEST_URL}/categories`;
+    return this.http.get(responseUrl);
+  }
+
+  getAllGoods() {
+    let responseUrl = `${ROOT_REQUEST_URL}/goods`;
     return this.http.get(responseUrl);
   }
 }

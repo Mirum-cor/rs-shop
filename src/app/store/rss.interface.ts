@@ -1,5 +1,9 @@
-import { ICategory } from "../services/category.interface";
+import { IAllGoods } from '../services/all-goods.interface';
+import { ICategory } from '../services/category.interface';
+import { IProduct } from '../services/product.interface';
 
 export interface IState {
-  categories: ICategory[],
+  categories: ICategory[];
+  goods: IAllGoods;
+  mainGoods: IProduct[];
 }

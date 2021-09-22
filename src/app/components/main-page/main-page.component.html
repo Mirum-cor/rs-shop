@@ -1,22 +1,65 @@
 <div class="container">
+  <div class="main-slider">
+    <div class="slider-wrapper">
+      <a
+        [routerLink]="['product', product.id]"
+        class="product-wrapper"
+        *ngFor="let product of mainGoods$ | async; let i = index"
+        [class.visible]="i ? false : true"
+        [class.invisible]="i ? true : false"
+        >
+        <img
+          src="{{
+            product.imageUrls[0] ?? '../../../../../assets/no-img.jpeg'
+          }}"
+          alt="{{ product.name }}"
+        />
+        <div class="product-description">
+          <h2>{{ product.name }}</h2>
+          <p>{{ product.description }}</p>
+          <h3>{{ product.price }} BYN</h3>
+        </div>
+      </a>
+    </div>
+    <div class="slider-btns">
+      <button
+        *ngFor="let product of mainGoods$ | async; let i = index"
+        [class.active]="i ? false : true"
+        id="{{ i }}-main-slider"
+        (click)="showMainSliderProduct($event)"
+      ></button>
+    </div>
+  </div>
   <div class="advantages">
     <h2>Возможности и преимущества</h2>
     <ul>
       <li>
         <h3>Гарантия качества</h3>
-        <p>Мы продаём только сертифицированный товар с гарантией сервисных центров, чек прилагается.</p>
+        <p>
+          Мы продаём только сертифицированный товар с гарантией сервисных
+          центров, чек прилагается.
+        </p>
       </li>
       <li>
         <h3>Честные цены</h3>
-        <p>Все цены, указанные на сайте, действительны и актуальны — данные обновляются автоматически.</p>
+        <p>
+          Все цены, указанные на сайте, действительны и актуальны — данные
+          обновляются автоматически.
+        </p>
       </li>
       <li>
         <h3>Доставка по всей Беларуси</h3>
-        <p>Мы доставляем заказы в Минск, Брест, Витебск, Гомель, Гродно, Могилёв и в любую другую точку Беларуси!</p>
+        <p>
+          Мы доставляем заказы в Минск, Брест, Витебск, Гомель, Гродно, Могилёв
+          и в любую другую точку Беларуси!
+        </p>
       </li>
       <li>
         <h3>Надежный сервис</h3>
-        <p>Мы предлагаем услуги по сборке, установке, настройке, гарантийному и послегарантийному обслуживанию товаров.</p>
+        <p>
+          Мы предлагаем услуги по сборке, установке, настройке, гарантийному и
+          послегарантийному обслуживанию товаров.
+        </p>
       </li>
     </ul>
   </div>

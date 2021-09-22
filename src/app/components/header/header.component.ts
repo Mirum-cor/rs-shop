@@ -8,22 +8,21 @@ import { RSSState } from 'src/app/store/rss.state';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.less']
+  styleUrls: ['./header.component.less'],
 })
 export class HeaderComponent implements OnInit {
-  @ViewChild("restOfContacts") restOfContacts: ElementRef = { nativeElement: '' };
-  @ViewChild("currentCity") currentCity: ElementRef = { nativeElement: '' };
-  @ViewChild("biggestCities") biggestCities: ElementRef = { nativeElement: '' };
+  @ViewChild('restOfContacts') restOfContacts: ElementRef = {
+    nativeElement: '',
+  };
+  @ViewChild('currentCity') currentCity: ElementRef = { nativeElement: '' };
+  @ViewChild('biggestCities') biggestCities: ElementRef = { nativeElement: '' };
 
   @Select(RSSState.categories) public categories$!: Observable<ICategory[]>;
-
-  categories: ICategory[] = [];
 
   constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.store.dispatch(new GetCategories([]));
-    this.categories = this.store.selectSnapshot(RSSState.categories);
     this.getCurrentLocation();
   }
 
@@ -41,13 +40,17 @@ export class HeaderComponent implements OnInit {
   }
 
   getCurrentCity([lat, lng]: string[]): void {
-    fetch(`https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=81aaf0c0775f440885be1a9e23fdc1ea`)
+    fetch(
+      `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=81aaf0c0775f440885be1a9e23fdc1ea`
+    )
       .then((responce) => {
-        if (!responce.ok) throw new Error(`Problem with geocoding ${responce.status}!`);
+        if (!responce.ok)
+          throw new Error(`Problem with geocoding ${responce.status}!`);
         return responce.json();
       })
       .then((data) => {
-        this.currentCity.nativeElement.textContent = data.results[0].components.city;
+        this.currentCity.nativeElement.textContent =
+          data.results[0].components.city;
       })
       .catch((err) => console.log(err));
   }
@@ -56,7 +59,9 @@ export class HeaderComponent implements OnInit {
     if (!this.restOfContacts.nativeElement.classList.contains('invisible')) {
       this.restOfContacts.nativeElement.classList.add('invisible');
       this.restOfContacts.nativeElement.classList.remove('visible');
-    } else if (!this.biggestCities.nativeElement.classList.contains('invisible')) {
+    } else if (
+      !this.biggestCities.nativeElement.classList.contains('invisible')
+    ) {
       this.biggestCities.nativeElement.classList.add('invisible');
       this.biggestCities.nativeElement.classList.remove('visible');
     }

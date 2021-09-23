@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { ProductCategoryComponent } from './components/product-category/product-category.component';
+import { ProductCardComponent } from './components/product-card/product-card.component';
 import { ProductComponent } from './components/product/product.component';
 import { FooterComponent } from './components/footer/footer.component';
 
@@ -22,6 +23,7 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
     HeaderComponent,
     MainPageComponent,
     ProductCategoryComponent,
+    ProductCardComponent,
     ProductComponent,
     FooterComponent,
   ],

@@ -1,1 +1,15 @@
-<p>product-category works!</p>
+<div class="container">
+  <div class="breadcrumbs">
+    <a routerLink="">Главная</a>
+    <span> > </span>
+    <p #category></p>
+  </div>
+  <div class="category-goods-wrapper">
+    <app-product-card
+      *ngFor="let product of currentCategoryGoods$ | async"
+      [product]="product"
+      class="product-card"
+    >
+    </app-product-card>
+  </div>
+</div>

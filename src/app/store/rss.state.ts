@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 import { IAllGoods } from '../services/all-goods.interface';
 import { ICategory } from '../services/category.interface';
 import { DataService } from '../services/data.service';
 import { IProduct } from '../services/product.interface';
-import { GetCategories, GetGoods, GetMainGoods, GetPopularGoods } from './rss.action';
+import { GetCategories, GetCurrentCategory, GetCurrentCategoryGoods, GetGoods, GetMainGoods, GetPopularGoods } from './rss.action';
 import { IState } from './rss.interface';
 
 const initialState: IState = {
@@ -13,6 +14,8 @@ const initialState: IState = {
   goods: {},
   mainGoods: [],
   popularGoods: [],
+  currentCategory: 'appliances',
+  currentCategoryGoods: [],
 };
 
 @State<IState>({
@@ -21,7 +24,7 @@ const initialState: IState = {
 })
 @Injectable()
 export class RSSState {
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService, private activateRoute: ActivatedRoute,) {}
 
   @Action(GetCategories)
   getCategories({ getState, patchState }: StateContext<IState>) {
@@ -29,7 +32,6 @@ export class RSSState {
       tap((result: any) => {
         const state = getState();
         patchState({
-          ...state,
           categories: result,
         });
       })
@@ -42,7 +44,6 @@ export class RSSState {
       tap((result: any) => {
         const state = getState();
         patchState({
-          ...state,
           goods: result,
         });
       })
@@ -61,7 +62,6 @@ export class RSSState {
         });
         const state = getState();
         patchState({
-          ...state,
           mainGoods: mainSliderGoods,
         });
       })
@@ -90,8 +90,27 @@ export class RSSState {
         });
         const state = getState();
         patchState({
-          ...state,
           popularGoods: popularSliderGoods,
+        });
+      })
+    );
+  }
+
+  @Action(GetCurrentCategory)
+  getCurrentCategory({ getState, patchState }: StateContext<IState>, action: GetCurrentCategory) {
+    const state = getState();
+    patchState({
+      currentCategory: action.currentCategory,
+    });
+  }
+
+  @Action(GetCurrentCategoryGoods)
+  getCurrentCategoryGoods({ getState, patchState }: StateContext<IState>) {
+    const state = getState();
+    return this.dataService.getCategoryGoods(state.currentCategory).pipe(
+      tap((result: any) => {
+        patchState({
+          currentCategoryGoods: result,
         });
       })
     );
@@ -115,5 +134,15 @@ export class RSSState {
   @Selector()
   public static popularGoods(state: IState): IProduct[] {
     return state.popularGoods;
+  }
+
+  @Selector()
+  public static currentCategory(state: IState): string {
+    return state.currentCategory;
+  }
+
+  @Selector()
+  public static currentCategoryGoods(state: IState): IProduct[] {
+    return state.currentCategoryGoods;
   }
 }

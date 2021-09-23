@@ -18,4 +18,9 @@ export class DataService {
     let responseUrl = `${ROOT_REQUEST_URL}/goods`;
     return this.http.get(responseUrl);
   }
+
+  getCategoryGoods(categoryId: string) {
+    let responseUrl = `${ROOT_REQUEST_URL}/goods/category/${categoryId}`;
+    return this.http.get(responseUrl);
+  }
 }

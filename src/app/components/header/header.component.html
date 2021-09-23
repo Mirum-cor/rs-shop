@@ -2,8 +2,14 @@
   <div class="container">
     <div class="info-block">
       <div class="current-place">
-        <p #currentCity (click)="toggleBiggestCities($event)">Выберите свой город</p>
-        <div class="biggest-cities invisible" #biggestCities (click)="chooseCity($event)">
+        <p #currentCity (click)="toggleBiggestCities($event)">
+          Выберите свой город
+        </p>
+        <div
+          class="biggest-cities invisible"
+          #biggestCities
+          (click)="chooseCity($event)"
+        >
           <p>Брест</p>
           <p>Витебск</p>
           <p>Гомель</p>
@@ -13,7 +19,9 @@
         </div>
       </div>
       <div class="contacts">
-        <a href="https://chats.viber.com/21vek.by" target="_blank" class="viber">Viber</a>
+        <a href="https://chats.viber.com/21vek.by" target="_blank" class="viber"
+          >Viber</a
+        >
         <a href="tel:+375293021021" class="a1">+375 29 302 10 21</a>
         <div class="more-of-contacts">
           <p (click)="toggleRestOfContacts($event)">Ещё</p>
@@ -25,17 +33,25 @@
           </div>
         </div>
       </div>
-      <p class="work-hours">Наш контакт-центр работает&nbsp;для&nbsp;Вас с&nbsp;8.00&nbsp;до&nbsp;21.00</p>
+      <p class="work-hours">
+        Наш контакт-центр работает&nbsp;для&nbsp;Вас
+        с&nbsp;8.00&nbsp;до&nbsp;21.00
+      </p>
     </div>
     <div class="nav-block">
       <a routerLink="">
-        <img src="../../../assets/logo.svg" alt="Logo" class="logo">
+        <img src="../../../assets/logo.svg" alt="Logo" class="logo" />
       </a>
     </div>
     <div class="categories-nav">
       <ul>
-        <li *ngFor="let category of categories$ | async" >
-          <a [routerLink]="['category', category.id]">
+        <li *ngFor="let category of categories$ | async">
+          <a
+            [routerLink]="['category', category.id]"
+            routerLinkActive="active-link"
+            id="{{ category.id }}"
+            (click)="getCategoryID($event)"
+          >
             {{ category.name }}
           </a>
         </li>

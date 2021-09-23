@@ -21,3 +21,13 @@ export class GetPopularGoods {
   static readonly type = '[RSS] Load Popular Goods for Slider';
   constructor(public popularGoods: IProduct[]) {}
 }
+
+export class GetCurrentCategory {
+  static readonly type = '[RSS] Load Current Category';
+  constructor(public currentCategory: string) {}
+}
+
+export class GetCurrentCategoryGoods {
+  static readonly type = '[RSS] Load Current Category Goods';
+  constructor(public currentCategoryGoods: IProduct[]) {}
+}

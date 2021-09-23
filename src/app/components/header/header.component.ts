@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { ICategory } from 'src/app/services/category.interface';
-import { GetCategories } from 'src/app/store/rss.action';
+import { GetCategories, GetCurrentCategory, GetCurrentCategoryGoods } from 'src/app/store/rss.action';
 import { RSSState } from 'src/app/store/rss.state';
 
 @Component({
@@ -88,5 +88,11 @@ export class HeaderComponent implements OnInit {
     this.biggestCities.nativeElement.classList.add('invisible');
     this.biggestCities.nativeElement.classList.remove('visible');
     event.stopPropagation();
+  }
+
+  getCategoryID(event: Event): void {
+    const target = event.target as HTMLElement;
+    this.store.dispatch(new GetCurrentCategory(target.id));
+    this.store.dispatch(new GetCurrentCategoryGoods([]));
   }
 }

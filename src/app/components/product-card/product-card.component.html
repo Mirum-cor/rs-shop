@@ -1,0 +1,17 @@
+<img
+  src="{{ product.imageUrls[0] ?? '../../../../../assets/no-img.jpeg' }}"
+  alt="{{ product.name }}"
+  class="product-img"
+/>
+<div class="brief-info">
+  <h4 class="price">{{ product.price }} руб.</h4>
+  <div class="rating" #rating></div>
+  <p #inStock>В наличии</p>
+</div>
+<a [routerLink]="['/product', product.id]" class="product-name">
+  {{ product.name }}
+</a>
+<div class="save-btns">
+  <button class="to-liked-btn">В избранное</button>
+  <button class="to-cart-btn">В корзину</button>
+</div>

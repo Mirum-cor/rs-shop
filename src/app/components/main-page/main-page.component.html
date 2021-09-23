@@ -7,7 +7,8 @@
         *ngFor="let product of mainGoods$ | async; let i = index"
         [class.visible]="i ? false : true"
         [class.invisible]="i ? true : false"
-        >
+        (click)="setCurrentProductID(product.id)"
+      >
         <img
           src="{{
             product.imageUrls[0] ?? '../../../../../assets/no-img.jpeg'
@@ -38,7 +39,8 @@
           [routerLink]="['product', product.id]"
           class="popular-product-wrapper"
           *ngFor="let product of popularGoods$ | async; let i = index"
-          >
+          (click)="setCurrentProductID(product.id)"
+        >
           <img
             src="{{
               product.imageUrls[0] ?? '../../../../../assets/no-img.jpeg'

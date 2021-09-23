@@ -31,3 +31,18 @@ export class GetCurrentCategoryGoods {
   static readonly type = '[RSS] Load Current Category Goods';
   constructor(public currentCategoryGoods: IProduct[]) {}
 }
+
+export class SetLikedGoods {
+  static readonly type = '[RSS] Load Liked Goods';
+  constructor(public likedGoods: IProduct[]) {}
+}
+
+export class SetGoodsInCart {
+  static readonly type = '[RSS] Load Goods In Cart';
+  constructor(public goodsInCart: IProduct[]) {}
+}
+
+export class SetCurrentProductID {
+  static readonly type = '[RSS] Load Current Product ID';
+  constructor(public currentProductID: string) {}
+}

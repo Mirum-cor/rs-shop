@@ -8,10 +8,10 @@
   <div class="rating" #rating></div>
   <p #inStock>В наличии</p>
 </div>
-<a [routerLink]="['/product', product.id]" class="product-name">
+<a [routerLink]="['/product', product.id]" class="product-name" (click)="setCurrentProductID()">
   {{ product.name }}
 </a>
 <div class="save-btns">
-  <button class="to-liked-btn">В избранное</button>
-  <button class="to-cart-btn">В корзину</button>
+  <button class="to-liked-btn" (click)="addToLiked()">В избранное</button>
+  <button class="to-cart-btn" (click)="addToCart()">В корзину</button>
 </div>

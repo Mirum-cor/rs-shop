@@ -6,7 +6,17 @@ import { IAllGoods } from '../services/all-goods.interface';
 import { ICategory } from '../services/category.interface';
 import { DataService } from '../services/data.service';
 import { IProduct } from '../services/product.interface';
-import { GetCategories, GetCurrentCategory, GetCurrentCategoryGoods, GetGoods, GetMainGoods, GetPopularGoods } from './rss.action';
+import {
+  GetCategories,
+  GetCurrentCategory,
+  GetCurrentCategoryGoods,
+  GetGoods,
+  GetMainGoods,
+  GetPopularGoods,
+  SetCurrentProductID,
+  SetGoodsInCart,
+  SetLikedGoods,
+} from './rss.action';
 import { IState } from './rss.interface';
 
 const initialState: IState = {
@@ -16,6 +26,9 @@ const initialState: IState = {
   popularGoods: [],
   currentCategory: 'appliances',
   currentCategoryGoods: [],
+  likedGoods: [],
+  goodsInCart: [],
+  currentProductID: '',
 };
 
 @State<IState>({
@@ -24,13 +37,15 @@ const initialState: IState = {
 })
 @Injectable()
 export class RSSState {
-  constructor(private dataService: DataService, private activateRoute: ActivatedRoute,) {}
+  constructor(
+    private dataService: DataService,
+    private activateRoute: ActivatedRoute
+  ) {}
 
   @Action(GetCategories)
-  getCategories({ getState, patchState }: StateContext<IState>) {
+  getCategories({ patchState }: StateContext<IState>) {
     return this.dataService.getCategories().pipe(
       tap((result: any) => {
-        const state = getState();
         patchState({
           categories: result,
         });
@@ -39,10 +54,9 @@ export class RSSState {
   }
 
   @Action(GetGoods)
-  getGoods({ getState, patchState }: StateContext<IState>) {
+  getGoods({ patchState }: StateContext<IState>) {
     return this.dataService.getAllGoods().pipe(
       tap((result: any) => {
-        const state = getState();
         patchState({
           goods: result,
         });
@@ -51,7 +65,7 @@ export class RSSState {
   }
 
   @Action(GetMainGoods)
-  getMainGoods({ getState, patchState }: StateContext<IState>) {
+  getMainGoods({ patchState }: StateContext<IState>) {
     const mainSliderGoods: IProduct[] = [];
     return this.dataService.getAllGoods().pipe(
       tap((result: any) => {
@@ -60,7 +74,6 @@ export class RSSState {
           const product = Object.values(subcategory)[0][0];
           mainSliderGoods.push(product);
         });
-        const state = getState();
         patchState({
           mainGoods: mainSliderGoods,
         });
@@ -69,7 +82,7 @@ export class RSSState {
   }
 
   @Action(GetPopularGoods)
-  getPopularGoods({ getState, patchState }: StateContext<IState>) {
+  getPopularGoods({ patchState }: StateContext<IState>) {
     let popularSliderGoods: IProduct[] = [];
     const MAX_GOODS_AMOUNT = 30;
     return this.dataService.getAllGoods().pipe(
@@ -79,7 +92,7 @@ export class RSSState {
           subcategories.forEach((subcategory) => {
             for (let i = 0; i < subcategory.length; i++) {
               if (popularSliderGoods.length < MAX_GOODS_AMOUNT) {
-                if(subcategory[i].rating >= 4) {
+                if (subcategory[i].rating >= 4) {
                   popularSliderGoods.push(subcategory[i]);
                 }
               } else {
@@ -88,7 +101,6 @@ export class RSSState {
             }
           });
         });
-        const state = getState();
         patchState({
           popularGoods: popularSliderGoods,
         });
@@ -97,8 +109,10 @@ export class RSSState {
   }
 
   @Action(GetCurrentCategory)
-  getCurrentCategory({ getState, patchState }: StateContext<IState>, action: GetCurrentCategory) {
-    const state = getState();
+  getCurrentCategory(
+    { patchState }: StateContext<IState>,
+    action: GetCurrentCategory
+  ) {
     patchState({
       currentCategory: action.currentCategory,
     });
@@ -114,6 +128,44 @@ export class RSSState {
         });
       })
     );
+  }
+
+  @Action(SetLikedGoods)
+  setLikedGoods(
+    { getState, patchState }: StateContext<IState>,
+    action: SetLikedGoods
+  ) {
+    const state = getState();
+    const likedGoods = [...state.likedGoods];
+    likedGoods.push(...action.likedGoods);
+    const likedSet = new Set(likedGoods);
+    patchState({
+      likedGoods: [...likedSet],
+    });
+  }
+
+  @Action(SetGoodsInCart)
+  setGoodsInCart(
+    { getState, patchState }: StateContext<IState>,
+    action: SetGoodsInCart
+  ) {
+    const state = getState();
+    const goodsInCart = [...state.goodsInCart];
+    goodsInCart.push(...action.goodsInCart);
+    const cartSet = new Set(goodsInCart);
+    patchState({
+      goodsInCart: [...cartSet],
+    });
+  }
+
+  @Action(SetCurrentProductID)
+  setCurrentProductID(
+    { patchState }: StateContext<IState>,
+    action: SetCurrentProductID
+  ) {
+    patchState({
+      currentProductID: action.currentProductID,
+    });
   }
 
   @Selector()
@@ -144,5 +196,20 @@ export class RSSState {
   @Selector()
   public static currentCategoryGoods(state: IState): IProduct[] {
     return state.currentCategoryGoods;
+  }
+
+  @Selector()
+  public static likedGoods(state: IState): IProduct[] {
+    return state.likedGoods;
+  }
+
+  @Selector()
+  public static goodsInCart(state: IState): IProduct[] {
+    return state.goodsInCart;
+  }
+
+  @Selector()
+  public static currentProductID(state: IState): string {
+    return state.currentProductID;
   }
 }

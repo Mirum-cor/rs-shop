@@ -1,5 +1,7 @@
 import { Component, ElementRef, Input, AfterViewInit, ViewChild } from '@angular/core';
+import { Store } from '@ngxs/store';
 import { IProduct } from 'src/app/services/product.interface';
+import { SetCurrentProductID, SetGoodsInCart, SetLikedGoods } from 'src/app/store/rss.action';
 
 @Component({
   selector: 'app-product-card',
@@ -19,6 +21,8 @@ export class ProductCardComponent implements AfterViewInit {
 
   @ViewChild('rating') rating: ElementRef = { nativeElement: '' };
   @ViewChild('inStock') inStock: ElementRef = { nativeElement: '' };
+
+  constructor(private store: Store) {}
 
   ngAfterViewInit(): void {
     this.setCorrespondingRating();
@@ -51,5 +55,17 @@ export class ProductCardComponent implements AfterViewInit {
     this.inStock.nativeElement.style.paddingLeft = '25px';
     this.inStock.nativeElement.style.backgroundSize = '20px';
     this.inStock.nativeElement.style.textShadow = '0 0 1px #000000';
+  }
+
+  addToLiked(): void {
+    this.store.dispatch(new SetLikedGoods([this.product]));
+  }
+
+  addToCart(): void {
+    this.store.dispatch(new SetGoodsInCart([this.product]));
+  }
+
+  setCurrentProductID(): void {
+    this.store.dispatch(new SetCurrentProductID(this.product.id));
   }
 }

@@ -7,6 +7,7 @@ import {
   GetGoods,
   GetMainGoods,
   GetPopularGoods,
+  SetCurrentProductID,
 } from 'src/app/store/rss.action';
 import { RSSState } from 'src/app/store/rss.state';
 
@@ -107,5 +108,9 @@ export class MainPageComponent implements OnInit {
           ? 0
           : this.popularSliderCounter + 1;
     }, 5000);
+  }
+
+  setCurrentProductID(id: string): void {
+    this.store.dispatch(new SetCurrentProductID(id));
   }
 }

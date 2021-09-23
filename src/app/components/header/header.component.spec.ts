@@ -1,6 +1,17 @@
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterModule } from '@angular/router';
+import { NgxsModule } from '@ngxs/store';
+import { RSSState } from 'src/app/store/rss.state';
 
-import { HeaderComponent } from './header.component';
+// import { HeaderComponent } from './header.component';
+
+@Component({
+  selector: '',
+  template: '',
+})
+class HeaderComponent{}
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -8,9 +19,10 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ]
-    })
-    .compileComponents();
+      declarations: [HeaderComponent],
+      imports: [NgxsModule.forRoot([RSSState]), RouterModule.forRoot([])],
+      providers: [HttpClient, HttpHandler],
+    }).compileComponents();
   });
 
   beforeEach(() => {

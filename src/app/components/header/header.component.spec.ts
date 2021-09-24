@@ -9,7 +9,7 @@ import { RSSState } from 'src/app/store/rss.state';
   selector: '',
   template: '',
 })
-class HeaderComponent{}
+class HeaderComponent {}
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
+import {
+  State, Action, StateContext, Selector,
+} from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 import { IAllGoods } from '../services/all-goods.interface';
 import { ICategory } from '../services/category.interface';
@@ -47,7 +49,7 @@ export class RSSState {
         patchState({
           categories: result,
         });
-      })
+      }),
     );
   }
 
@@ -58,7 +60,7 @@ export class RSSState {
         patchState({
           goods: result,
         });
-      })
+      }),
     );
   }
 
@@ -75,13 +77,13 @@ export class RSSState {
         patchState({
           mainGoods: mainSliderGoods,
         });
-      })
+      }),
     );
   }
 
   @Action(GetPopularGoods)
   getPopularGoods({ patchState }: StateContext<IState>) {
-    let popularSliderGoods: IProduct[] = [];
+    const popularSliderGoods: IProduct[] = [];
     const MAX_GOODS_AMOUNT = 30;
     return this.dataService.getAllGoods().pipe(
       tap((result: any) => {
@@ -102,14 +104,14 @@ export class RSSState {
         patchState({
           popularGoods: popularSliderGoods,
         });
-      })
+      }),
     );
   }
 
   @Action(GetCurrentCategory)
   getCurrentCategory(
     { patchState }: StateContext<IState>,
-    action: GetCurrentCategory
+    action: GetCurrentCategory,
   ) {
     patchState({
       currentCategory: action.currentCategory,
@@ -124,14 +126,14 @@ export class RSSState {
         patchState({
           currentCategoryGoods: result,
         });
-      })
+      }),
     );
   }
 
   @Action(SetLikedGoods)
   setLikedGoods(
     { getState, patchState }: StateContext<IState>,
-    action: SetLikedGoods
+    action: SetLikedGoods,
   ) {
     const state = getState();
     const likedGoods = [...state.likedGoods];
@@ -145,7 +147,7 @@ export class RSSState {
   @Action(SetGoodsInCart)
   setGoodsInCart(
     { getState, patchState }: StateContext<IState>,
-    action: SetGoodsInCart
+    action: SetGoodsInCart,
   ) {
     const state = getState();
     const goodsInCart = [...state.goodsInCart];
@@ -159,7 +161,7 @@ export class RSSState {
   @Action(SetCurrentProductID)
   setCurrentProductID(
     { patchState }: StateContext<IState>,
-    action: SetCurrentProductID
+    action: SetCurrentProductID,
   ) {
     patchState({
       currentProductID: action.currentProductID,

@@ -10,17 +10,17 @@ export class DataService {
   constructor(private http: HttpClient, private store: Store) { }
 
   getCategories() {
-    let responseUrl = `${ROOT_REQUEST_URL}/categories`;
+    const responseUrl = `${ROOT_REQUEST_URL}/categories`;
     return this.http.get(responseUrl);
   }
 
   getAllGoods() {
-    let responseUrl = `${ROOT_REQUEST_URL}/goods`;
+    const responseUrl = `${ROOT_REQUEST_URL}/goods`;
     return this.http.get(responseUrl);
   }
 
   getCategoryGoods(categoryId: string) {
-    let responseUrl = `${ROOT_REQUEST_URL}/goods/category/${categoryId}`;
+    const responseUrl = `${ROOT_REQUEST_URL}/goods/category/${categoryId}`;
     return this.http.get(responseUrl);
   }
 }

@@ -29,7 +29,7 @@
           }
         ],
         "@angular-eslint/component-selector": [
-          "error",
+          "off",
           {
             "type": "element",
             "prefix": "app",
@@ -37,7 +37,11 @@
           }
         ],
         "@typescript-eslint/class-name-casing": "off",
-        "import/extensions": "off"
+        "import/extensions": "off",
+        "import/no-unresolved": "off",
+        "no-plusplus": "off",
+        "no-empty-function": "off",
+        "max-classes-per-file": "off"
       }
     },
     {

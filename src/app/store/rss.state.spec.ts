@@ -19,7 +19,7 @@ describe('State & Selectors', async () => {
 
   it('should be created with default values', () => {
     const categories: ICategory[] = store.selectSnapshot(
-      (state: any) => state.RSSState.categories
+      (state: any) => state.RSSState.categories,
     );
     expect(categories).toEqual([]);
   });

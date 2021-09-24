@@ -8,7 +8,7 @@ import { RSSState } from 'src/app/store/rss.state';
   selector: '',
   template: '',
 })
-class MainPageComponent{}
+class MainPageComponent {}
 
 describe('MainPageComponent', () => {
   let component: MainPageComponent;

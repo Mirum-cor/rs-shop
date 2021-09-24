@@ -1,4 +1,6 @@
-import { Component, ElementRef, Input, AfterViewInit, ViewChild } from '@angular/core';
+import {
+  Component, ElementRef, Input, AfterViewInit, ViewChild,
+} from '@angular/core';
 import { Store } from '@ngxs/store';
 import { IProduct } from 'src/app/services/product.interface';
 import { SetCurrentProductID, SetGoodsInCart, SetLikedGoods } from 'src/app/store/rss.action';
@@ -6,7 +8,7 @@ import { SetCurrentProductID, SetGoodsInCart, SetLikedGoods } from 'src/app/stor
 @Component({
   selector: 'app-product-card',
   templateUrl: './product-card.component.html',
-  styleUrls: ['./product-card.component.less']
+  styleUrls: ['./product-card.component.less'],
 })
 export class ProductCardComponent implements AfterViewInit {
   @Input() product: IProduct = {
@@ -20,6 +22,7 @@ export class ProductCardComponent implements AfterViewInit {
   };
 
   @ViewChild('rating') rating: ElementRef = { nativeElement: '' };
+
   @ViewChild('inStock') inStock: ElementRef = { nativeElement: '' };
 
   constructor(private store: Store) {}

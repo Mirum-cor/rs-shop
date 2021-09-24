@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { HttpClientModule } from '@angular/common/http';
+import { NgxsModule } from '@ngxs/store';
+import { environment } from 'src/environments/environment';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -10,12 +14,8 @@ import { ProductCardComponent } from './components/product-card/product-card.com
 import { ProductComponent } from './components/product/product.component';
 import { FooterComponent } from './components/footer/footer.component';
 
-import { HttpClientModule } from '@angular/common/http';
 import { DataService } from './services/data.service';
-import { NgxsModule } from '@ngxs/store';
 import { RSSState } from './store/rss.state';
-import { environment } from 'src/environments/environment';
-import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 
 @NgModule({
   declarations: [

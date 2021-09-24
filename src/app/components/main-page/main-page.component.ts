@@ -1,4 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component, ElementRef, OnInit, ViewChild,
+} from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { IAllGoods } from 'src/app/services/all-goods.interface';
@@ -18,21 +20,29 @@ import { RSSState } from 'src/app/store/rss.state';
 })
 export class MainPageComponent implements OnInit {
   @Select(RSSState.goods) public goods$!: Observable<IAllGoods[]>;
+
   @Select(RSSState.mainGoods) public mainGoods$!: Observable<IProduct[]>;
+
   @Select(RSSState.popularGoods) public popularGoods$!: Observable<IProduct[]>;
 
   @ViewChild('mainSliderWrapper')
   mainSliderWrapper: ElementRef = { nativeElement: '' };
+
   @ViewChild('mainSliderBtnsDiv')
   mainSliderBtnsDiv: ElementRef = { nativeElement: '' };
+
   @ViewChild('innerPopularSliderWrapper')
   innerPopularSliderWrapper: ElementRef = { nativeElement: '' };
+
   @ViewChild('popularSliderBtnsDiv')
   popularSliderBtnsDiv: ElementRef = { nativeElement: '' };
 
-  mainSliderCounter: number = 1;
-  popularSliderCounter: number = 1;
+  mainSliderCounter = 1;
+
+  popularSliderCounter = 1;
+
   intervalIdMainSlider!: any; // NodeJS.Timeout;
+
   intervalIdPopularSlider!: any; // NodeJS.Timeout;
 
   constructor(private store: Store) {}
@@ -64,7 +74,8 @@ export class MainPageComponent implements OnInit {
   }
 
   setMainSliderCurrentProduct(targetNumber: number): void {
-    const mainSliderGoods: HTMLElement[] = Array.from(this.mainSliderWrapper.nativeElement.children);
+    const mainSliderGoods: HTMLElement[] = Array
+      .from(this.mainSliderWrapper.nativeElement.children);
     const mainSliderBtns: HTMLElement[] = Array.from(this.mainSliderBtnsDiv.nativeElement.children);
     mainSliderGoods.forEach((product) => {
       const currentProduct = product as HTMLElement;
@@ -80,33 +91,32 @@ export class MainPageComponent implements OnInit {
   }
 
   setPopularSliderCurrentProduct(targetNumber: number): void {
-    const popularSliderBtns: HTMLElement[] = Array.from(this.popularSliderBtnsDiv.nativeElement.children);
+    const popularSliderBtns: HTMLElement[] = Array
+      .from(this.popularSliderBtnsDiv.nativeElement.children);
     popularSliderBtns.forEach((btn) => {
       (btn as HTMLElement).classList.remove('active');
     });
-    this.innerPopularSliderWrapper.nativeElement.style.left = -100 * targetNumber + '%';
+    this.innerPopularSliderWrapper.nativeElement.style.left = `${-100 * targetNumber}%`;
     popularSliderBtns[targetNumber].classList.add('active');
   }
 
   turnOnMainSliderTimer(): void {
     this.intervalIdMainSlider = setInterval(() => {
       this.setMainSliderCurrentProduct(this.mainSliderCounter);
-      this.mainSliderCounter =
-        this.mainSliderCounter ===
-        this.store.selectSnapshot(RSSState.mainGoods).length - 1
-          ? 0
-          : this.mainSliderCounter + 1;
+      this.mainSliderCounter = this.mainSliderCounter
+        === this.store.selectSnapshot(RSSState.mainGoods).length - 1
+        ? 0
+        : this.mainSliderCounter + 1;
     }, 5000);
   }
 
   turnOnPopularSliderTimer(): void {
     this.intervalIdPopularSlider = setInterval(() => {
       this.setPopularSliderCurrentProduct(this.popularSliderCounter);
-      this.popularSliderCounter =
-        this.popularSliderCounter ===
-        this.store.selectSnapshot(RSSState.mainGoods).length - 1
-          ? 0
-          : this.popularSliderCounter + 1;
+      this.popularSliderCounter = this.popularSliderCounter
+        === this.store.selectSnapshot(RSSState.mainGoods).length - 1
+        ? 0
+        : this.popularSliderCounter + 1;
     }, 5000);
   }
 

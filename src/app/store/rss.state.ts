@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 import { IAllGoods } from '../services/all-goods.interface';
@@ -39,7 +38,6 @@ const initialState: IState = {
 export class RSSState {
   constructor(
     private dataService: DataService,
-    private activateRoute: ActivatedRoute
   ) {}
 
   @Action(GetCategories)

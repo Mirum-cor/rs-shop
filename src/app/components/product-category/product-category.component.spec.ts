@@ -1,4 +1,8 @@
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgxsModule } from '@ngxs/store';
+import { RSSState } from 'src/app/store/rss.state';
 
 import { ProductCategoryComponent } from './product-category.component';
 
@@ -8,9 +12,11 @@ describe('ProductCategoryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProductCategoryComponent ]
-    })
-    .compileComponents();
+      declarations: [ProductCategoryComponent],
+      imports: [NgxsModule.forRoot([RSSState])],
+      providers: [HttpClient, HttpHandler],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
   });
 
   beforeEach(() => {

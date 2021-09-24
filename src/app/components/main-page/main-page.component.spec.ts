@@ -1,10 +1,8 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgxsModule } from '@ngxs/store';
 import { RSSState } from 'src/app/store/rss.state';
-
-// import { MainPageComponent } from './main-page.component';
 
 @Component({
   selector: '',
@@ -21,6 +19,7 @@ describe('MainPageComponent', () => {
       declarations: [MainPageComponent],
       imports: [NgxsModule.forRoot([RSSState])],
       providers: [HttpClient, HttpHandler],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   });
 

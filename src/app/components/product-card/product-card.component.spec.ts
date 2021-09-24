@@ -1,4 +1,8 @@
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgxsModule } from '@ngxs/store';
+import { RSSState } from 'src/app/store/rss.state';
 
 import { ProductCardComponent } from './product-card.component';
 
@@ -8,9 +12,11 @@ describe('ProductCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProductCardComponent ]
-    })
-    .compileComponents();
+      declarations: [ProductCardComponent],
+      imports: [NgxsModule.forRoot([RSSState])],
+      providers: [HttpClient, HttpHandler],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
   });
 
   beforeEach(() => {

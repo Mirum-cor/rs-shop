@@ -1,11 +1,9 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
 import { NgxsModule } from '@ngxs/store';
 import { RSSState } from 'src/app/store/rss.state';
-
-// import { HeaderComponent } from './header.component';
 
 @Component({
   selector: '',
@@ -22,6 +20,7 @@ describe('HeaderComponent', () => {
       declarations: [HeaderComponent],
       imports: [NgxsModule.forRoot([RSSState]), RouterModule.forRoot([])],
       providers: [HttpClient, HttpHandler],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   });
 

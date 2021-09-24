@@ -43,4 +43,29 @@ describe('State & Selectors', async () => {
     const popularGoods: IProduct[] = store.selectSnapshot(RSSState.popularGoods);
     expect(popularGoods).toEqual([]);
   });
+
+  it('getCurrentCategory selector works', () => {
+    const currentCategory: string = store.selectSnapshot(RSSState.currentCategory);
+    expect(currentCategory).toEqual('appliances');
+  });
+
+  it('getCurrentCategoryGoods selector works', () => {
+    const currentCategoryGoods: IProduct[] = store.selectSnapshot(RSSState.currentCategoryGoods);
+    expect(currentCategoryGoods).toEqual([]);
+  });
+
+  it('setLikedGoods selector works', () => {
+    const likedGoods: IProduct[] = store.selectSnapshot(RSSState.likedGoods);
+    expect(likedGoods).toEqual([]);
+  });
+
+  it('setGoodsInCart selector works', () => {
+    const goodsInCart: IProduct[] = store.selectSnapshot(RSSState.goodsInCart);
+    expect(goodsInCart).toEqual([]);
+  });
+
+  it('setCurrentProductID selector works', () => {
+    const currentProductID: string = store.selectSnapshot(RSSState.currentProductID);
+    expect(currentProductID).toEqual('');
+  });
 });

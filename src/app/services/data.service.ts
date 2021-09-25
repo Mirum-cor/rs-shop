@@ -23,4 +23,9 @@ export class DataService {
     const responseUrl = `${ROOT_REQUEST_URL}/goods/category/${categoryId}`;
     return this.http.get(responseUrl);
   }
+
+  getProduct(productId: string) {
+    const responseUrl = `${ROOT_REQUEST_URL}/goods/item/${productId}`;
+    return this.http.get(responseUrl);
+  }
 }

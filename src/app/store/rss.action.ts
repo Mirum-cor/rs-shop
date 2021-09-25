@@ -67,3 +67,9 @@ export class SetCurrentProductID {
 
   constructor(public currentProductID: string) {}
 }
+
+export class GetCurrentProduct {
+  static readonly type = '[RSS] Get Current Product';
+
+  constructor(public currentProduct: IProduct) {}
+}

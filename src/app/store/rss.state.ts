@@ -11,6 +11,7 @@ import {
   GetCategories,
   GetCurrentCategory,
   GetCurrentCategoryGoods,
+  GetCurrentProduct,
   GetGoods,
   GetMainGoods,
   GetPopularGoods,
@@ -31,7 +32,16 @@ const initialState: IState = {
   currentCategoryGoods: [],
   favoriteGoods: [],
   goodsInCart: [],
-  currentProductID: '',
+  currentProductID: 'CSMV5335MC0S',
+  currentProduct: {
+    id: '',
+    name: '',
+    imageUrls: [],
+    rating: 0,
+    availableAmount: 0,
+    price: 0,
+    description: '',
+  },
 };
 
 @State<IState>({
@@ -198,6 +208,20 @@ export class RSSState {
     });
   }
 
+  @Action(GetCurrentProduct)
+  getCurrentProduct(
+    { getState, patchState }: StateContext<IState>,
+  ) {
+    const state = getState();
+    return this.dataService.getProduct(state.currentProductID).pipe(
+      tap((result: any) => {
+        patchState({
+          currentProduct: result,
+        });
+      }),
+    );
+  }
+
   @Selector()
   public static categories(state: IState): ICategory[] {
     return state.categories;
@@ -241,5 +265,10 @@ export class RSSState {
   @Selector()
   public static currentProductID(state: IState): string {
     return state.currentProductID;
+  }
+
+  @Selector()
+  public static currentProduct(state: IState): IProduct {
+    return state.currentProduct;
   }
 }

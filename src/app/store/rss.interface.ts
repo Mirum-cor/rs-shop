@@ -12,4 +12,5 @@ export interface IState {
   favoriteGoods: IProduct[];
   goodsInCart: IProduct[];
   currentProductID: string;
+  currentProduct: IProduct;
 }

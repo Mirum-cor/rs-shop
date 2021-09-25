@@ -1,1 +1,9 @@
-<p>product works!</p>
+<div class="container">
+  <div class="breadcrumbs">
+    <a routerLink="">Главная</a>
+    <span> > </span>
+    <a [routerLink]="['/category', product.category]" #category></a>
+    <span> > </span>
+    <p #subCategory></p>
+  </div>
+</div>

@@ -5,7 +5,7 @@ import { tap } from 'rxjs/operators';
 import { ICategory } from 'src/app/services/category.interface';
 import { IProduct } from 'src/app/services/product.interface';
 import { ISubcategory } from 'src/app/services/subcategory.interface';
-import { GetCurrentProduct } from 'src/app/store/rss.action';
+import { GetCurrentProduct, SetFavoriteGoods, SetGoodsInCart, UpdateFavoriteGoods, UpdateGoodsInCart } from 'src/app/store/rss.action';
 import { RSSState } from 'src/app/store/rss.state';
 
 @Component({
@@ -36,6 +36,8 @@ export class ProductComponent implements OnInit {
     this.store.dispatch(new GetCurrentProduct(this.product));
     this.currentProduct$.subscribe((result) => {
       this.product = JSON.parse(JSON.stringify(result));
+      const favoriteGoods: IProduct[] = this.store.selectSnapshot(RSSState.favoriteGoods);
+      const goodsInCart: IProduct[] = this.store.selectSnapshot(RSSState.goodsInCart);
       const categories = this.store.selectSnapshot(RSSState.categories);
       const currentCategory: ICategory = categories.find(
         (category) => category.id === this.product.category
@@ -54,6 +56,33 @@ export class ProductComponent implements OnInit {
         this.category.nativeElement.textContent = currentCategory.name;
         this.subCategory.nativeElement.textContent = currentSubCategory.name;
       }
+      if (favoriteGoods.find((product) => product.id === this.product.id)) {
+        this.product = { ...this.product, isFavorite: true };
+      }
+      if (goodsInCart.find((product) => product.id === this.product.id)) {
+        this.product = { ...this.product, isInCart: true };
+      }
     });
+  }
+
+
+  addToFavorite(): void {
+    this.product = { ...this.product, isFavorite: true };
+    this.store.dispatch(new SetFavoriteGoods([this.product]));
+  }
+
+  addToCart(): void {
+    this.product = { ...this.product, isInCart: true };
+    this.store.dispatch(new SetGoodsInCart([this.product]));
+  }
+
+  removeFromFavorite(): void {
+    this.product = { ...this.product, isFavorite: false };
+    this.store.dispatch(new UpdateFavoriteGoods([this.product]));
+  }
+
+  removeFromCart(): void {
+    this.product = { ...this.product, isInCart: false };
+    this.store.dispatch(new UpdateGoodsInCart([this.product]));
   }
 }

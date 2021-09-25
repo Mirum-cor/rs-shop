@@ -6,4 +6,34 @@
     <span> > </span>
     <p #subCategory></p>
   </div>
+  <div class="product-wrapper">
+    <h2>{{ product.name }}</h2>
+    <div class="images"></div>
+    <div class="save-btns">
+      <button
+        class="to-favorite-btn"
+        (click)="addToFavorite()"
+        *ngIf="!product.isFavorite; else removeFromFavoriteList"
+      >
+        В избранное
+      </button>
+      <ng-template #removeFromFavoriteList>
+        <button class="to-favorite-btn" (click)="removeFromFavorite()">
+          Удалить из избранного
+        </button>
+      </ng-template>
+      <button
+        class="to-cart-btn"
+        (click)="addToCart()"
+        *ngIf="!product.isInCart; else removeFromCartList"
+      >
+        В корзину
+      </button>
+      <ng-template #removeFromCartList>
+        <button class="to-cart-btn" (click)="removeFromCart()">
+          Удалить из корзины
+        </button>
+      </ng-template>
+    </div>
+  </div>
 </div>

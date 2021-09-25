@@ -5,6 +5,7 @@
 
 .breadcrumbs {
   display: flex;
+  flex-wrap: wrap;
   gap: 5px;
   font-size: 16px;
   line-height: 20px;
@@ -17,4 +18,46 @@
 
 .breadcrumbs a:hover {
   border-color: #000000;
+}
+
+h2 {
+  margin-top: 20px;
+  font-size: 23px;
+  line-height: 25px;
+  text-align: center;
+}
+
+.save-btns {
+  margin: 20px auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.to-favorite-btn,
+.to-cart-btn {
+  width: 110px;
+  height: 40px;
+  font-family: 'Merriweather', serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.25s linear;
+}
+
+.save-btns button:hover {
+  box-shadow: 0 0 5px #295036;
+}
+
+.to-favorite-btn {
+  color: #295036;
+  background-color: #e1f0cb;
+}
+
+.to-cart-btn {
+  color: #ffffff;
+  background-color: #295036;
 }

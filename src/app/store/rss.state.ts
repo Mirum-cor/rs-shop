@@ -15,8 +15,10 @@ import {
   GetMainGoods,
   GetPopularGoods,
   SetCurrentProductID,
+  SetFavoriteGoods,
   SetGoodsInCart,
-  SetLikedGoods,
+  UpdateFavoriteGoods,
+  UpdateGoodsInCart,
 } from './rss.action';
 import { IState } from './rss.interface';
 
@@ -27,7 +29,7 @@ const initialState: IState = {
   popularGoods: [],
   currentCategory: 'appliances',
   currentCategoryGoods: [],
-  likedGoods: [],
+  favoriteGoods: [],
   goodsInCart: [],
   currentProductID: '',
 };
@@ -130,17 +132,31 @@ export class RSSState {
     );
   }
 
-  @Action(SetLikedGoods)
-  setLikedGoods(
+  @Action(SetFavoriteGoods)
+  setFavoriteGoods(
     { getState, patchState }: StateContext<IState>,
-    action: SetLikedGoods,
+    action: SetFavoriteGoods,
   ) {
     const state = getState();
-    const likedGoods = [...state.likedGoods];
-    likedGoods.push(...action.likedGoods);
-    const likedSet = new Set(likedGoods);
+    const favoriteGoods = [...state.favoriteGoods];
+    favoriteGoods.push(...action.favoriteGoods);
+    const favoriteSet = new Set(favoriteGoods);
     patchState({
-      likedGoods: [...likedSet],
+      favoriteGoods: [...favoriteSet],
+    });
+  }
+
+  @Action(UpdateFavoriteGoods)
+  updateFavoriteGoods(
+    { getState, patchState }: StateContext<IState>,
+    action: UpdateFavoriteGoods,
+  ) {
+    const state = getState();
+    const favoriteGoods = [...state.favoriteGoods]
+      .filter((product) => product.id !== action.favoriteGoods[0].id) ?? [];
+    const favoriteSet = new Set(favoriteGoods);
+    patchState({
+      favoriteGoods: [...favoriteSet],
     });
   }
 
@@ -152,6 +168,20 @@ export class RSSState {
     const state = getState();
     const goodsInCart = [...state.goodsInCart];
     goodsInCart.push(...action.goodsInCart);
+    const cartSet = new Set(goodsInCart);
+    patchState({
+      goodsInCart: [...cartSet],
+    });
+  }
+
+  @Action(UpdateGoodsInCart)
+  updateGoodsInCart(
+    { getState, patchState }: StateContext<IState>,
+    action: UpdateGoodsInCart,
+  ) {
+    const state = getState();
+    const goodsInCart = [...state.goodsInCart]
+      .filter((product) => product.id !== action.goodsInCart[0].id) ?? [];
     const cartSet = new Set(goodsInCart);
     patchState({
       goodsInCart: [...cartSet],
@@ -199,8 +229,8 @@ export class RSSState {
   }
 
   @Selector()
-  public static likedGoods(state: IState): IProduct[] {
-    return state.likedGoods;
+  public static favoriteGoods(state: IState): IProduct[] {
+    return state.favoriteGoods;
   }
 
   @Selector()

@@ -54,9 +54,9 @@ describe('State & Selectors', async () => {
     expect(currentCategoryGoods).toEqual([]);
   });
 
-  it('setLikedGoods selector works', () => {
-    const likedGoods: IProduct[] = store.selectSnapshot(RSSState.likedGoods);
-    expect(likedGoods).toEqual([]);
+  it('setFavoriteGoods selector works', () => {
+    const favoriteGoods: IProduct[] = store.selectSnapshot(RSSState.favoriteGoods);
+    expect(favoriteGoods).toEqual([]);
   });
 
   it('setGoodsInCart selector works', () => {

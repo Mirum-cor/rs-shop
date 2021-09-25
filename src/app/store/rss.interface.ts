@@ -9,7 +9,7 @@ export interface IState {
   popularGoods: IProduct[];
   currentCategory: string;
   currentCategoryGoods: IProduct[];
-  likedGoods: IProduct[];
+  favoriteGoods: IProduct[];
   goodsInCart: IProduct[];
   currentProductID: string;
 }

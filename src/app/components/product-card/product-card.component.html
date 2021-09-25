@@ -8,10 +8,36 @@
   <div class="rating" #rating></div>
   <p #inStock>В наличии</p>
 </div>
-<a [routerLink]="['/product', product.id]" class="product-name" (click)="setCurrentProductID()">
+<a
+  [routerLink]="['/product', product.id]"
+  class="product-name"
+  (click)="setCurrentProductID()"
+>
   {{ product.name }}
 </a>
 <div class="save-btns">
-  <button class="to-liked-btn" (click)="addToLiked()">В избранное</button>
-  <button class="to-cart-btn" (click)="addToCart()">В корзину</button>
+  <button
+    class="to-favorite-btn"
+    (click)="addToFavorite()"
+    *ngIf="!product.isFavorite; else removeFromFavoriteList"
+  >
+    В избранное
+  </button>
+  <ng-template #removeFromFavoriteList>
+    <button class="to-favorite-btn" (click)="removeFromFavorite()">
+      Удалить из избранного
+    </button>
+  </ng-template>
+  <button
+    class="to-cart-btn"
+    (click)="addToCart()"
+    *ngIf="!product.isInCart; else removeFromCartList"
+  >
+    В корзину
+  </button>
+  <ng-template #removeFromCartList>
+    <button class="to-cart-btn" (click)="removeFromCart()">
+      Удалить из корзины
+    </button>
+  </ng-template>
 </div>

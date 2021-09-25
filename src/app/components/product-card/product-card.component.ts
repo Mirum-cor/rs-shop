@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { IProduct } from 'src/app/services/product.interface';
-import { SetCurrentProductID, SetGoodsInCart, SetLikedGoods } from 'src/app/store/rss.action';
+import { SetCurrentProductID, SetFavoriteGoods, SetGoodsInCart, UpdateFavoriteGoods, UpdateGoodsInCart } from 'src/app/store/rss.action';
 
 @Component({
   selector: 'app-product-card',
@@ -60,12 +60,25 @@ export class ProductCardComponent implements AfterViewInit {
     this.inStock.nativeElement.style.textShadow = '0 0 1px #000000';
   }
 
-  addToLiked(): void {
-    this.store.dispatch(new SetLikedGoods([this.product]));
+  addToFavorite(): void {
+    this.product = { ...this.product, isFavorite: true };
+    this.store.dispatch(new SetFavoriteGoods([this.product]));
   }
 
   addToCart(): void {
+    this.product = { ...this.product, isInCart: true };
     this.store.dispatch(new SetGoodsInCart([this.product]));
+  }
+
+  removeFromFavorite(): void {
+    this.product = { ...this.product, isFavorite: false };
+    this.store.dispatch(new UpdateFavoriteGoods([this.product]));
+  }
+
+  removeFromCart(): void {
+    this.product = { ...this.product, isInCart: false };
+    this.store.dispatch(new UpdateGoodsInCart([this.product]));
+
   }
 
   setCurrentProductID(): void {

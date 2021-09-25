@@ -38,20 +38,32 @@ export class GetCurrentCategoryGoods {
   constructor(public currentCategoryGoods: IProduct[]) {}
 }
 
-export class SetLikedGoods {
-  static readonly type = '[RSS] Load Liked Goods';
+export class SetFavoriteGoods {
+  static readonly type = '[RSS] Set Favorite Goods';
 
-  constructor(public likedGoods: IProduct[]) {}
+  constructor(public favoriteGoods: IProduct[]) {}
+}
+
+export class UpdateFavoriteGoods {
+  static readonly type = '[RSS] Update Favorite Goods';
+
+  constructor(public favoriteGoods: IProduct[]) {}
 }
 
 export class SetGoodsInCart {
-  static readonly type = '[RSS] Load Goods In Cart';
+  static readonly type = '[RSS] Set Goods In Cart';
+
+  constructor(public goodsInCart: IProduct[]) {}
+}
+
+export class UpdateGoodsInCart {
+  static readonly type = '[RSS] Update Goods In Cart';
 
   constructor(public goodsInCart: IProduct[]) {}
 }
 
 export class SetCurrentProductID {
-  static readonly type = '[RSS] Load Current Product ID';
+  static readonly type = '[RSS] Set Current Product ID';
 
   constructor(public currentProductID: string) {}
 }

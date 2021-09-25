@@ -76,7 +76,6 @@ export class ProductComponent implements OnInit, AfterViewChecked {
   }
 
   setCorrespondingRating(): void {
-    console.log(this.rating.nativeElement.children.length, this.product.rating);
     if (this.rating.nativeElement.children.length !== this.product.rating) {
       this.rating.nativeElement.innerHTML = '';
       for (let i = 1; i <= this.product.rating; i++) {

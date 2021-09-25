@@ -1,4 +1,7 @@
+import { HttpClient, HttpHandler } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgxsModule } from '@ngxs/store';
+import { RSSState } from 'src/app/store/rss.state';
 
 import { ProductComponent } from './product.component';
 
@@ -9,6 +12,8 @@ describe('ProductComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ProductComponent],
+      imports: [NgxsModule.forRoot([RSSState])],
+      providers: [HttpClient, HttpHandler],
     }).compileComponents();
   });
 

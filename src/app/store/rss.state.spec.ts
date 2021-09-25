@@ -66,6 +66,19 @@ describe('State & Selectors', async () => {
 
   it('setCurrentProductID selector works', () => {
     const currentProductID: string = store.selectSnapshot(RSSState.currentProductID);
-    expect(currentProductID).toEqual('');
+    expect(currentProductID).toEqual('CSMV5335MC0S');
+  });
+
+  it('setCurrentProduct selector works', () => {
+    const currentProduct: IProduct = store.selectSnapshot(RSSState.currentProduct);
+    expect(currentProduct).toEqual({
+      id: '',
+      name: '',
+      imageUrls: [],
+      description: '',
+      price: 0,
+      rating: 0,
+      availableAmount: 0,
+    });
   });
 });

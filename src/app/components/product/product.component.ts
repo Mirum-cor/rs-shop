@@ -30,6 +30,8 @@ export class ProductComponent implements OnInit {
 
   @ViewChild('subCategory') subCategory: ElementRef = { nativeElement: '' };
 
+  @ViewChild('mainImage') mainImage: ElementRef = { nativeElement: '' };
+
   constructor(private store: Store) {}
 
   ngOnInit(): void {
@@ -65,6 +67,13 @@ export class ProductComponent implements OnInit {
     });
   }
 
+  showImageBigger(event: Event): void {
+    const target = event.target as HTMLElement;
+    const img = target.nodeName === 'IMG'
+      ? target as HTMLImageElement
+      : target.firstElementChild as HTMLImageElement;
+      this.mainImage.nativeElement.src = img.src;
+  }
 
   addToFavorite(): void {
     this.product = { ...this.product, isFavorite: true };

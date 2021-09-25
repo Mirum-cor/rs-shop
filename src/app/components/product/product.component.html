@@ -8,7 +8,20 @@
   </div>
   <div class="product-wrapper">
     <h2>{{ product.name }}</h2>
-    <div class="images"></div>
+    <div class="images">
+      <div class="all-images">
+        <div
+          class="all-images-wrapper"
+          *ngFor="let url of product.imageUrls; let i = index"
+          (click)="showImageBigger($event)"
+        >
+          <img src="{{ url }}" alt="Product image {{ i + 1 }}" />
+        </div>
+      </div>
+      <div class="main-image">
+        <img src="{{ product.imageUrls[0] }}" alt="Product image" #mainImage />
+      </div>
+    </div>
     <div class="save-btns">
       <button
         class="to-favorite-btn"

@@ -67,19 +67,16 @@ export class ProductCardComponent implements OnInit, AfterViewInit {
   setCorrespondingInStockStyle(): void {
     if (this.product.availableAmount >= 20) {
       this.inStock.nativeElement.style.color = '#008f30';
-      this.inStock.nativeElement.style.background =
-        'url(../../../assets/much-products.svg) no-repeat left -1px';
+      this.inStock.nativeElement.style.background = 'url(../../../assets/much-products.svg) no-repeat left -1px';
     } else if (this.product.availableAmount < 5) {
       this.inStock.nativeElement.style.color = '#b10000';
-      this.inStock.nativeElement.style.background =
-        'url(../../../assets/few-products.svg) no-repeat left -1px';
+      this.inStock.nativeElement.style.background = 'url(../../../assets/few-products.svg) no-repeat left -1px';
     } else if (
-      this.product.availableAmount >= 5 &&
-      this.product.availableAmount < 20
+      this.product.availableAmount >= 5
+      && this.product.availableAmount < 20
     ) {
       this.inStock.nativeElement.style.color = '#d3c500';
-      this.inStock.nativeElement.style.background =
-        'url(../../../assets/enough-products.svg) no-repeat left -1px';
+      this.inStock.nativeElement.style.background = 'url(../../../assets/enough-products.svg) no-repeat left -1px';
     } else {
       this.inStock.nativeElement.style.color = '#b10000';
       this.inStock.nativeElement.textContent = 'Нет в наличии';

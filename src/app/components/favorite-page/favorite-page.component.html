@@ -1,0 +1,17 @@
+<div class="container">
+  <h2>Избранные товары</h2>
+  <div
+    class="favorite-goods-wrapper"
+    *ngIf="(favoriteGoods$ | async)?.length; else noFavorites"
+  >
+    <app-product-card
+      *ngFor="let product of favoriteGoods$ | async"
+      [product]="product"
+      class="product-card"
+    >
+    </app-product-card>
+  </div>
+  <ng-template #noFavorites>
+    <p class="no-favorites">У Вас пока нет товаров в избранном</p>
+  </ng-template>
+</div>

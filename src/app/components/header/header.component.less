@@ -136,6 +136,14 @@
   box-shadow: 5px 5px 5px #3b744e;
 }
 
+.favorite-and-cart a {
+  position: relative;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 20px;
+  transition: all 0.25s linear;
+}
+
 .categories-nav ul {
   width: 100%;
   display: flex;
@@ -152,6 +160,7 @@
   text-align: center;
 }
 
+.favorite-and-cart a:after,
 .categories-nav a:after {
   position: absolute;
   content: "";
@@ -164,6 +173,7 @@
   transition: all 0.25s linear;
 }
 
+.favorite-and-cart a:hover::after,
 .categories-nav a.active-link:after,
 .categories-nav li:hover > a:not(.active-link):after {
   transform: scaleX(1);

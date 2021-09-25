@@ -19,7 +19,18 @@
         </div>
       </div>
       <div class="main-image">
-        <img src="{{ product.imageUrls[0] }}" alt="Product image" #mainImage />
+        <img
+          src="../../../assets/popular-product.png"
+          alt="Хит продаж"
+          class="popular-product"
+          *ngIf="product.rating >= 4"
+        />
+        <img
+          src="{{ product.imageUrls[0] }}"
+          class="big-img"
+          alt="Product image"
+          #mainImage
+        />
       </div>
     </div>
     <div class="save-btns">
@@ -47,6 +58,14 @@
           Удалить из корзины
         </button>
       </ng-template>
+    </div>
+    <div class="info">
+      <p class="description">{{ product.description }}</p>
+      <div class="characteristics">
+        <h3>{{ product.price }} руб.</h3>
+        <div class="rating" #rating></div>
+        <p #inStock>В наличии</p>
+      </div>
     </div>
   </div>
 </div>

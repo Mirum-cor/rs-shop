@@ -41,9 +41,12 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
   }
 
   setCurrentAmount(currentAmount: HTMLElement): void {
-    const price = parseFloat(
-      currentAmount.parentElement?.previousElementSibling?.textContent!
-    );
+    const priceTextContent =
+      currentAmount.parentElement?.previousElementSibling?.textContent?.replace(
+        ',',
+        ''
+      )!;
+    const price = parseFloat(priceTextContent);
     const productTotal = currentAmount.parentElement
       ?.nextElementSibling as HTMLElement;
     let newProductTotal = (
@@ -94,7 +97,9 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
   removeFromCart(event: Event): void {
     const target = event.target as HTMLElement;
     const productId = target.parentElement?.parentElement!.id ?? '';
-    const product = this.store.selectSnapshot(RSSState.goodsInCart).find((product) => productId === product.id)!;
+    const product = this.store
+      .selectSnapshot(RSSState.goodsInCart)
+      .find((product) => productId === product.id)!;
     this.store.dispatch(new UpdateGoodsInCart([product]));
   }
 }

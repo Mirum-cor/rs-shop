@@ -25,11 +25,11 @@
           <td class="description">
             {{ product.description | slice: 0:100 }}...
           </td>
-          <td class="price">{{ product.price }} руб.</td>
+          <td class="price">{{ product.price| number:'1.2' }} руб.</td>
           <td class="amount">
-            <span class="less">-</span>
+            <span class="less" (click)="addLessProduct($event)">-</span>
             <span class="current-amount">1</span>
-            <span class="more">+</span>
+            <span class="more" (click)="addMoreProduct($event)">+</span>
           </td>
           <td class="product-total"></td>
           <td class="remove"><span></span></td>
@@ -37,7 +37,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="7">Итого: <span class="total"></span></td>
+          <td colspan="7">Итого: <span #total></span></td>
         </tr>
       </tfoot>
     </table>

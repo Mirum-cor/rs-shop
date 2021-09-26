@@ -4,7 +4,7 @@
   class="product-img"
 />
 <div class="brief-info">
-  <h4 class="price">{{ product.price }} руб.</h4>
+  <h4 class="price">{{ product.price | number:'1.2' }} руб.</h4>
   <div #rating></div>
   <p #inStock>В наличии</p>
 </div>

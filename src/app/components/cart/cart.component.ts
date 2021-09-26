@@ -1,4 +1,10 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  AfterViewInit,
+  AfterViewChecked,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { IProduct } from 'src/app/services/product.interface';
@@ -7,8 +13,80 @@ import { RSSState } from 'src/app/store/rss.state';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.less']
+  styleUrls: ['./cart.component.less'],
 })
-export class CartComponent {
+export class CartComponent implements AfterViewInit, AfterViewChecked {
   @Select(RSSState.goodsInCart) public goodsInCart$!: Observable<IProduct[]>;
+
+  @ViewChild('total') total: ElementRef = { nativeElement: '' };
+
+  constructor() {}
+
+  ngAfterViewInit(): void {
+    this.setEachProductCurrentAmount();
+  }
+
+  ngAfterViewChecked(): void {
+    this.calculateTotalAmount();
+  }
+
+  setEachProductCurrentAmount(): void {
+    const currentAmounts: HTMLElement[] = Array.from(
+      document.querySelectorAll('.current-amount')
+    );
+    currentAmounts.forEach((currentAmount) => {
+      this.setCurrentAmount(currentAmount);
+    });
+  }
+
+  setCurrentAmount(currentAmount: HTMLElement): void {
+    const price = parseFloat(
+      currentAmount.parentElement?.previousElementSibling?.textContent!
+    );
+    const productTotal = currentAmount.parentElement
+      ?.nextElementSibling as HTMLElement;
+    let newProductTotal = (
+      Math.round(price * parseInt(currentAmount.textContent!) * 100) / 100
+    ).toString();
+    newProductTotal = this.setRightTotalPriceDecimalPart(newProductTotal);
+    productTotal.textContent = `${newProductTotal} руб.`;
+  }
+
+  addMoreProduct(event: Event): void {
+    const target = event.target as HTMLElement;
+    const amount = target.previousElementSibling as HTMLElement;
+    amount.textContent = `${parseInt(amount.textContent!) + 1}`;
+    this.setCurrentAmount(amount);
+  }
+
+  addLessProduct(event: Event): void {
+    const target = event.target as HTMLElement;
+    const amount = target.nextElementSibling as HTMLElement;
+    if (parseInt(amount.textContent!) !== 1) {
+      amount.textContent = `${parseInt(amount.textContent!) - 1}`;
+      this.setCurrentAmount(amount);
+    }
+  }
+
+  calculateTotalAmount(): void {
+    let total = Array.from(document.querySelectorAll('.product-total'))
+      .slice(1)
+      .map((productTotal) => parseFloat(productTotal.textContent!))
+      .reduce((acc, productTotal) => productTotal + acc, 0)
+      .toString();
+    total = (Math.round(+total * 100) / 100).toString();
+    total = this.setRightTotalPriceDecimalPart(total);
+    this.total.nativeElement.textContent = `${total} руб.`;
+  }
+
+  setRightTotalPriceDecimalPart(total: string): string {
+    let newTotal = total;
+    if (total.includes('.')) {
+      let decimalPart = total.slice(total.indexOf('.') + 1);
+      if (decimalPart.length < 2) newTotal += '0';
+    } else {
+      newTotal += '.00';
+    }
+    return newTotal;
+  }
 }

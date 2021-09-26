@@ -18,7 +18,7 @@
         <div class="product-description">
           <h2>{{ product.name }}</h2>
           <p>{{ product.description }}</p>
-          <h3>{{ product.price }} BYN</h3>
+          <h3>{{ product.price | number:'1.2' }} BYN</h3>
         </div>
       </a>
     </div>
@@ -49,7 +49,7 @@
           />
           <div class="product-description">
             <h2>{{ product.name }}</h2>
-            <h3>{{ product.price }} BYN</h3>
+            <h3>{{ product.price | number:'1.2' }} BYN</h3>
           </div>
         </a>
       </div>

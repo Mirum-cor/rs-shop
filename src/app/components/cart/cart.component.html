@@ -15,7 +15,7 @@
         <th class="remove">Удалить</th>
       </thead>
       <tbody *ngFor="let product of goodsInCart$ | async">
-        <tr>
+        <tr id="{{ product.id }}">
           <td class="name">
             <a [routerLink]="['/product', product.id]">{{ product.name }}</a>
           </td>
@@ -32,7 +32,7 @@
             <span class="more" (click)="addMoreProduct($event)">+</span>
           </td>
           <td class="product-total"></td>
-          <td class="remove"><span></span></td>
+          <td class="remove"><span (click)="removeFromCart($event)"></span></td>
         </tr>
       </tbody>
       <tfoot>

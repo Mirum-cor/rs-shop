@@ -5,9 +5,10 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
-import { Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { IProduct } from 'src/app/services/product.interface';
+import { UpdateGoodsInCart } from 'src/app/store/rss.action';
 import { RSSState } from 'src/app/store/rss.state';
 
 @Component({
@@ -20,7 +21,7 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
 
   @ViewChild('total') total: ElementRef = { nativeElement: '' };
 
-  constructor() {}
+  constructor(private store: Store) {}
 
   ngAfterViewInit(): void {
     this.setEachProductCurrentAmount();
@@ -88,5 +89,12 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
       newTotal += '.00';
     }
     return newTotal;
+  }
+
+  removeFromCart(event: Event): void {
+    const target = event.target as HTMLElement;
+    const productId = target.parentElement?.parentElement!.id ?? '';
+    const product = this.store.selectSnapshot(RSSState.goodsInCart).find((product) => productId === product.id)!;
+    this.store.dispatch(new UpdateGoodsInCart([product]));
   }
 }

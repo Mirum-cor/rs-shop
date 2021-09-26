@@ -12,6 +12,7 @@
         <th class="price">Цена</th>
         <th class="amount">Количество</th>
         <th class="product-total">Сумма</th>
+        <th class="delivery">Доставка</th>
         <th class="remove">Удалить</th>
       </thead>
       <tbody *ngFor="let product of goodsInCart$ | async">
@@ -32,6 +33,7 @@
             <span class="more" (click)="addMoreProduct($event)">+</span>
           </td>
           <td class="product-total"></td>
+          <td class="delivery">сегодня</td>
           <td class="remove"><span (click)="removeFromCart($event)"></span></td>
         </tr>
       </tbody>

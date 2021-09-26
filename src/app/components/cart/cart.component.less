@@ -28,29 +28,19 @@ td {
   text-align: center;
 }
 
-// TODO: Refactor rools
-
 .name {
-  width: 25%;
-}
-
-.image {
-  width: 10%;
+  width: 20%;
 }
 
 .description {
   width: 25%;
 }
 
-.price {
-  width: 10%;
-}
-
-.amount {
-  width: 10%;
-}
-
-.product-total {
+.image,
+.price,
+.amount,
+.product-total,
+.delivery {
   width: 10%;
 }
 
@@ -129,18 +119,22 @@ tfoot td {
   text-align: center;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 760px) {
   .description {
     display: none;
   }
 }
 
-@media screen and (max-width: 570px) {
+@media screen and (max-width: 670px) {
   table {
     font-size: 14px;
     line-height: 16px;
     word-wrap: break-word;
     word-break: break-word;
+  }
+
+  .image {
+    display: none;
   }
 }
 

@@ -8,6 +8,8 @@ import {
   GetCategories,
   GetCurrentCategory,
   GetCurrentCategoryGoods,
+  SetFavoriteGoods,
+  SetGoodsInCart,
 } from 'src/app/store/rss.action';
 import { RSSState } from 'src/app/store/rss.state';
 
@@ -48,6 +50,14 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(new GetCategories([]));
     this.getCurrentLocation();
+    const favoriteGoods = localStorage.getItem('favoriteGoods')
+      ? JSON.parse(localStorage.getItem('favoriteGoods')!)
+      : [];
+    const goodsInCart = localStorage.getItem('goodsInCart')
+      ? JSON.parse(localStorage.getItem('goodsInCart')!)
+      : [];
+    this.store.dispatch(new SetFavoriteGoods(favoriteGoods));
+    this.store.dispatch(new SetGoodsInCart(goodsInCart));
   }
 
   getCurrentLocation(): void {
@@ -160,15 +170,13 @@ export class HeaderComponent implements OnInit {
       this.loginForm.nativeElement.classList.remove('visible-login-form');
       this.loginForm.nativeElement.classList.add('invisible-login-form');
       this.dataService
-      .getToken(
-        this.name.nativeElement.value,
-        this.password.nativeElement.value
+        .getToken(
+          this.name.nativeElement.value,
+          this.password.nativeElement.value
         )
         .subscribe((data) => {
           localStorage.setItem('currentUser', JSON.stringify(data));
-          console.log(data);
           this.currentUser = JSON.parse(JSON.stringify(data)).token;
-          console.log(this.currentUser);
         });
       document.forms[0].reset();
     } else {

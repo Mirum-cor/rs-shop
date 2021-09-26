@@ -7,7 +7,7 @@ import { ROOT_REQUEST_URL } from '../utils/utilities';
   providedIn: 'root',
 })
 export class DataService {
-  constructor(private http: HttpClient, private store: Store) { }
+  constructor(private http: HttpClient, private store: Store) {}
 
   getCategories() {
     const responseUrl = `${ROOT_REQUEST_URL}/categories`;
@@ -35,7 +35,27 @@ export class DataService {
       firstName: '',
       lastName: '',
       login,
-      password
+      password,
     });
+  }
+
+  setFavorite(id: string) {
+    const responseUrl = `${ROOT_REQUEST_URL}/users/favorites`;
+    return this.http.post(responseUrl, { id });
+  }
+
+  removeFromFavorite(id: string) {
+    const responseUrl = `${ROOT_REQUEST_URL}/users/favorites?id=${id}`;
+    return this.http.delete(responseUrl);
+  }
+
+  setCart(id: string) {
+    const responseUrl = `${ROOT_REQUEST_URL}/users/cart`;
+    return this.http.post(responseUrl, { id });
+  }
+
+  removeFromCart(id: string) {
+    const responseUrl = `${ROOT_REQUEST_URL}/users/cart?id=${id}`;
+    return this.http.delete(responseUrl);
   }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngxs/store';
 import { ROOT_REQUEST_URL } from '../utils/utilities';
+import { IOrder } from './order.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -57,5 +58,10 @@ export class DataService {
   removeFromCart(id: string) {
     const responseUrl = `${ROOT_REQUEST_URL}/users/cart?id=${id}`;
     return this.http.delete(responseUrl);
+  }
+
+  setOrder(order: IOrder) {
+    const responseUrl = `${ROOT_REQUEST_URL}/users/order`;
+    return this.http.post(responseUrl, { order });
   }
 }

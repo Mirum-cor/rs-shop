@@ -79,7 +79,7 @@
     </div>
   </div>
 </div>
-<div class="login-form invisible" #loginForm>
+<div class="login-form invisible" #loginForm (click)="closeLoginForm($event)">
   <form>
     <label for="name">Имя</label>
     <input

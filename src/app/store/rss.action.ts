@@ -1,5 +1,6 @@
 import { IAllGoods } from '../services/all-goods.interface';
 import { ICategory } from '../services/category.interface';
+import { IOrder } from '../services/order.interface';
 import { IProduct } from '../services/product.interface';
 
 export class GetCategories {
@@ -62,6 +63,12 @@ export class UpdateGoodsInCart {
   constructor(public goodsInCart: IProduct[]) {}
 }
 
+export class ResetGoodsInCart {
+  static readonly type = '[RSS] Reset Goods In Cart';
+
+  constructor(public goodsInCart: IProduct[]) {}
+}
+
 export class SetCurrentProductID {
   static readonly type = '[RSS] Set Current Product ID';
 
@@ -72,4 +79,10 @@ export class GetCurrentProduct {
   static readonly type = '[RSS] Get Current Product';
 
   constructor(public currentProduct: IProduct) {}
+}
+
+export class SetOrder {
+  static readonly type = '[RSS] Set Order';
+
+  constructor(public orders: IOrder[]) {}
 }

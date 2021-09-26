@@ -6,6 +6,7 @@ import { tap } from 'rxjs/operators';
 import { IAllGoods } from '../services/all-goods.interface';
 import { ICategory } from '../services/category.interface';
 import { DataService } from '../services/data.service';
+import { IOrder } from '../services/order.interface';
 import { IProduct } from '../services/product.interface';
 import {
   GetCategories,
@@ -15,9 +16,11 @@ import {
   GetGoods,
   GetMainGoods,
   GetPopularGoods,
+  ResetGoodsInCart,
   SetCurrentProductID,
   SetFavoriteGoods,
   SetGoodsInCart,
+  SetOrder,
   UpdateFavoriteGoods,
   UpdateGoodsInCart,
 } from './rss.action';
@@ -42,6 +45,7 @@ const initialState: IState = {
     price: 0,
     description: '',
   },
+  orders: [],
 };
 
 @State<IState>({
@@ -214,6 +218,16 @@ export class RSSState {
     }
   }
 
+  @Action(ResetGoodsInCart)
+  resetGoodsInCart(
+    { patchState }: StateContext<IState>
+  ) {
+    patchState({
+      goodsInCart: [],
+    });
+    localStorage.setItem('goodsInCart', JSON.stringify([]));
+  }
+
   @Action(SetCurrentProductID)
   setCurrentProductID(
     { patchState }: StateContext<IState>,
@@ -236,6 +250,24 @@ export class RSSState {
         });
       }),
     );
+  }
+
+  @Action(SetOrder)
+  setOrder(
+    { getState, patchState }: StateContext<IState>,
+    action: SetOrder,
+  ) {
+    const state = getState();
+    const orders = [...state.orders];
+    orders.push(...action.orders);
+    const ordersSet = new Set(orders);
+    patchState({
+      orders: [...ordersSet],
+    });
+    if (action.orders[0]) {
+      this.dataService.setOrder(action.orders[0]);
+      localStorage.setItem('orders', JSON.stringify([...ordersSet]));
+    }
   }
 
   @Selector()
@@ -286,5 +318,10 @@ export class RSSState {
   @Selector()
   public static currentProduct(state: IState): IProduct {
     return state.currentProduct;
+  }
+
+  @Selector()
+  public static orders(state: IState): IOrder[] {
+    return state.orders;
   }
 }

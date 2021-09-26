@@ -44,17 +44,17 @@
       </tfoot>
     </table>
     <form>
-      <label for="name">ФИО</label>
+      <label for="userName">ФИО</label>
       <input
         type="text"
-        name="name"
-        id="name"
+        name="userName"
+        id="userName"
         placeholder="Введите Ваше имя"
         required
         minlength="3"
         maxlength="50"
         (blur)="isNameValid($event)"
-        #name
+        #userName
       />
       <label for="address">Адрес доставки</label>
       <input
@@ -98,6 +98,7 @@
       <label for="comment">Комментарий к заказу</label>
       <textarea name="comment" id="comment" maxlength="250" #comment></textarea>
       <input type="submit" value="Заказать" (click)="sendOrder($event)" />
+      <h3 class="order-sent" #orderSent>Заказ отправлен!</h3>
     </form>
   </div>
   <ng-template #noGoodsInCart>

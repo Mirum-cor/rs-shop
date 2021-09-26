@@ -128,6 +128,15 @@ export class HeaderComponent implements OnInit {
   login(): void {
     this.loginForm.nativeElement.classList.remove('invisible-login-form');
     this.loginForm.nativeElement.classList.add('visible-login-form');
+    document.body.classList.add('not-scrollable');
+  }
+
+  closeLoginForm(event: Event): void {
+    if ((event.target as HTMLElement).nodeName === 'DIV') {
+      this.loginForm.nativeElement.classList.add('invisible-login-form');
+      this.loginForm.nativeElement.classList.remove('visible-login-form');
+      document.body.classList.remove('not-scrollable');
+    }
   }
 
   logout(): void {
@@ -179,6 +188,7 @@ export class HeaderComponent implements OnInit {
           this.currentUser = JSON.parse(JSON.stringify(data)).token;
         });
       document.forms[0].reset();
+      document.body.classList.remove('not-scrollable');
     } else {
       this.name.nativeElement.classList.remove('right-input');
       this.password.nativeElement.classList.remove('right-input');

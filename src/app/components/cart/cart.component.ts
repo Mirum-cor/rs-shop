@@ -7,8 +7,9 @@ import {
 } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
+import { IOrder } from 'src/app/services/order.interface';
 import { IProduct } from 'src/app/services/product.interface';
-import { UpdateGoodsInCart } from 'src/app/store/rss.action';
+import { ResetGoodsInCart, SetOrder, UpdateGoodsInCart } from 'src/app/store/rss.action';
 import { RSSState } from 'src/app/store/rss.state';
 
 @Component({
@@ -20,12 +21,14 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
   @Select(RSSState.goodsInCart) public goodsInCart$!: Observable<IProduct[]>;
 
   @ViewChild('total') total: ElementRef = { nativeElement: '' };
-  @ViewChild('name') name: ElementRef = { nativeElement: '' };
+  @ViewChild('userName') userName: ElementRef = { nativeElement: '' };
   @ViewChild('address') address: ElementRef = { nativeElement: '' };
   @ViewChild('tel') tel: ElementRef = { nativeElement: '' };
   @ViewChild('date') date: ElementRef = { nativeElement: '' };
   @ViewChild('time') time: ElementRef = { nativeElement: '' };
   @ViewChild('comment') comment: ElementRef = { nativeElement: '' };
+
+  @ViewChild('orderSent') orderSent: ElementRef = { nativeElement: '' };
 
   constructor(private store: Store) {}
 
@@ -34,7 +37,9 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
-    this.calculateTotalAmount();
+    if (this.store.selectSnapshot(RSSState.goodsInCart).length) {
+      this.calculateTotalAmount();
+    }
   }
 
   setEachProductCurrentAmount(): void {
@@ -177,25 +182,55 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
 
   sendOrder(event: Event): void {
     if (
-      this.name.nativeElement.classList.contains('right-input') &&
+      this.userName.nativeElement.classList.contains('right-input') &&
       this.address.nativeElement.classList.contains('right-input') &&
       this.tel.nativeElement.classList.contains('right-input') &&
       this.date.nativeElement.classList.contains('right-input') &&
       this.time.nativeElement.classList.contains('right-input')
     ) {
       event.preventDefault();
-      document.forms[0].reset();
-      this.name.nativeElement.classList = [];
-      this.address.nativeElement.classList = [];
-      this.tel.nativeElement.classList = [];
-      this.date.nativeElement.classList = [];
-      this.time.nativeElement.classList = [];
+      this.store.dispatch(new SetOrder([this.setOrderToSend()]));
+      this.orderSent.nativeElement.classList.remove('invisible');
+      this.orderSent.nativeElement.classList.add('visible');
+      document.body.classList.add('not-scrollable');
+      this.resetForm();
+      this.store.dispatch(new ResetGoodsInCart([]));
     } else {
-      this.name.nativeElement.classList.add('wrong-input');
+      this.userName.nativeElement.classList.add('wrong-input');
       this.address.nativeElement.classList.add('wrong-input');
       this.tel.nativeElement.classList.add('wrong-input');
       this.date.nativeElement.classList.add('wrong-input');
       this.time.nativeElement.classList.add('wrong-input');
     }
+  }
+
+  resetForm(): void {
+    document.forms[0].reset();
+    this.userName.nativeElement.classList = [];
+    this.address.nativeElement.classList = [];
+    this.tel.nativeElement.classList = [];
+    this.date.nativeElement.classList = [];
+    this.time.nativeElement.classList = [];
+  }
+
+  setOrderToSend(): IOrder {
+    const ids = Array.from(document.querySelectorAll('tr'))
+      .slice(0, -1)
+      .map((tr) => tr.id);
+    const amounts = Array.from(
+      document.querySelectorAll('.current-amount')
+    ).map((amount) => +amount);
+    const items = ids.map((id, i) => ({ id: id, amount: amounts[i] }));
+    const order: IOrder = {
+      items,
+      details: {
+        name: this.userName.nativeElement.value,
+        address: this.address.nativeElement.value,
+        phone: this.tel.nativeElement.value,
+        timeToDeliver: `${this.date.nativeElement.value}, ${this.date.nativeElement.value}`,
+        comment: this.comment.nativeElement.value,
+      },
+    };
+    return order;
   }
 }

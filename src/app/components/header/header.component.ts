@@ -4,6 +4,7 @@ import {
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { ICategory } from 'src/app/services/category.interface';
+import { IProduct } from 'src/app/services/product.interface';
 import { GetCategories, GetCurrentCategory, GetCurrentCategoryGoods } from 'src/app/store/rss.action';
 import { RSSState } from 'src/app/store/rss.state';
 
@@ -22,6 +23,8 @@ export class HeaderComponent implements OnInit {
   @ViewChild('biggestCities') biggestCities: ElementRef = { nativeElement: '' };
 
   @Select(RSSState.categories) public categories$!: Observable<ICategory[]>;
+  @Select(RSSState.favoriteGoods) public favoriteGoods$!: Observable<IProduct[]>;
+  @Select(RSSState.goodsInCart) public goodsInCart$!: Observable<IProduct[]>;
 
   constructor(private store: Store) {}
 

@@ -43,8 +43,16 @@
         <img src="../../../assets/logo.svg" alt="Логотип" class="logo" />
       </a>
       <div class="favorite-and-cart">
-        <a routerLink="favorite" routerLinkActive="active-link">Избранное</a>
-        <a routerLink="cart" routerLinkActive="active-link">Корзина</a>
+        <a routerLink="favorite" routerLinkActive="active-link"
+          >Избранное<span *ngIf="(favoriteGoods$ | async)?.length">
+            ({{ (favoriteGoods$ | async)?.length }})</span
+          ></a
+        >
+        <a routerLink="cart" routerLinkActive="active-link"
+          >Корзина<span *ngIf="(goodsInCart$ | async)?.length">
+            ({{ (goodsInCart$ | async)?.length }})</span
+          ></a
+        >
       </div>
     </div>
     <div class="categories-nav">

@@ -220,7 +220,7 @@ export class RSSState {
 
   @Action(ResetGoodsInCart)
   resetGoodsInCart(
-    { patchState }: StateContext<IState>
+    { patchState }: StateContext<IState>,
   ) {
     patchState({
       goodsInCart: [],

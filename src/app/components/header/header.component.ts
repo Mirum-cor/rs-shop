@@ -1,4 +1,6 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import {
+  Component, ViewChild, ElementRef, OnInit,
+} from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { ICategory } from 'src/app/services/category.interface';
@@ -34,9 +36,11 @@ export class HeaderComponent implements OnInit {
   @ViewChild('password') password: ElementRef = { nativeElement: '' };
 
   @Select(RSSState.categories) public categories$!: Observable<ICategory[]>;
+
   @Select(RSSState.favoriteGoods) public favoriteGoods$!: Observable<
     IProduct[]
   >;
+
   @Select(RSSState.goodsInCart) public goodsInCart$!: Observable<IProduct[]>;
 
   currentUser: string;
@@ -75,16 +79,14 @@ export class HeaderComponent implements OnInit {
 
   getCurrentCity([lat, lng]: string[]): void {
     fetch(
-      `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=81aaf0c0775f440885be1a9e23fdc1ea`
+      `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=81aaf0c0775f440885be1a9e23fdc1ea`,
     )
       .then((responce) => {
-        if (!responce.ok)
-          throw new Error(`Problem with geocoding ${responce.status}!`);
+        if (!responce.ok) throw new Error(`Problem with geocoding ${responce.status}!`);
         return responce.json();
       })
       .then((data) => {
-        this.currentCity.nativeElement.textContent =
-          data.results[0].components.city;
+        this.currentCity.nativeElement.textContent = data.results[0].components.city;
       })
       // eslint-disable-next-line no-console
       .catch((err) => console.log(err));
@@ -169,8 +171,8 @@ export class HeaderComponent implements OnInit {
   confirmLogin(event: Event): void {
     event.preventDefault();
     if (
-      this.name.nativeElement.classList.contains('right-input') &&
-      this.password.nativeElement.classList.contains('right-input')
+      this.name.nativeElement.classList.contains('right-input')
+      && this.password.nativeElement.classList.contains('right-input')
     ) {
       this.name.nativeElement.classList.remove('right-input');
       this.password.nativeElement.classList.remove('right-input');
@@ -181,7 +183,7 @@ export class HeaderComponent implements OnInit {
       this.dataService
         .getToken(
           this.name.nativeElement.value,
-          this.password.nativeElement.value
+          this.password.nativeElement.value,
         )
         .subscribe((data) => {
           localStorage.setItem('currentUser', JSON.stringify(data));

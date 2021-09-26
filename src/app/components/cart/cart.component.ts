@@ -9,7 +9,11 @@ import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { IOrder } from 'src/app/services/order.interface';
 import { IProduct } from 'src/app/services/product.interface';
-import { ResetGoodsInCart, SetOrder, UpdateGoodsInCart } from 'src/app/store/rss.action';
+import {
+  ResetGoodsInCart,
+  SetOrder,
+  UpdateGoodsInCart,
+} from 'src/app/store/rss.action';
 import { RSSState } from 'src/app/store/rss.state';
 
 @Component({
@@ -21,11 +25,17 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
   @Select(RSSState.goodsInCart) public goodsInCart$!: Observable<IProduct[]>;
 
   @ViewChild('total') total: ElementRef = { nativeElement: '' };
+
   @ViewChild('userName') userName: ElementRef = { nativeElement: '' };
+
   @ViewChild('address') address: ElementRef = { nativeElement: '' };
+
   @ViewChild('tel') tel: ElementRef = { nativeElement: '' };
+
   @ViewChild('date') date: ElementRef = { nativeElement: '' };
+
   @ViewChild('time') time: ElementRef = { nativeElement: '' };
+
   @ViewChild('comment') comment: ElementRef = { nativeElement: '' };
 
   @ViewChild('orderSent') orderSent: ElementRef = { nativeElement: '' };
@@ -44,7 +54,7 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
 
   setEachProductCurrentAmount(): void {
     const currentAmounts: HTMLElement[] = Array.from(
-      document.querySelectorAll('.current-amount')
+      document.querySelectorAll('.current-amount'),
     );
     currentAmounts.forEach((currentAmount) => {
       this.setCurrentAmount(currentAmount);
@@ -52,16 +62,14 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
   }
 
   setCurrentAmount(currentAmount: HTMLElement): void {
-    const priceTextContent =
-      currentAmount.parentElement?.previousElementSibling?.textContent?.replace(
-        ',',
-        ''
-      )!;
+    const priceTD = currentAmount.parentElement
+      ?.previousElementSibling as HTMLElement;
+    const priceTextContent = priceTD.textContent?.replace(',', '')!;
     const price = parseFloat(priceTextContent);
     const productTotal = currentAmount.parentElement
       ?.nextElementSibling as HTMLElement;
     let newProductTotal = (
-      Math.round(price * parseInt(currentAmount.textContent!) * 100) / 100
+      Math.round(price * parseInt(currentAmount.textContent!, 10) * 100) / 100
     ).toString();
     newProductTotal = this.setRightTotalPriceDecimalPart(newProductTotal);
     productTotal.textContent = `${newProductTotal} руб.`;
@@ -70,15 +78,15 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
   addMoreProduct(event: Event): void {
     const target = event.target as HTMLElement;
     const amount = target.previousElementSibling as HTMLElement;
-    amount.textContent = `${parseInt(amount.textContent!) + 1}`;
+    amount.textContent = `${parseInt(amount.textContent!, 10) + 1}`;
     this.setCurrentAmount(amount);
   }
 
   addLessProduct(event: Event): void {
     const target = event.target as HTMLElement;
     const amount = target.nextElementSibling as HTMLElement;
-    if (parseInt(amount.textContent!) !== 1) {
-      amount.textContent = `${parseInt(amount.textContent!) - 1}`;
+    if (parseInt(amount.textContent!, 10) !== 1) {
+      amount.textContent = `${parseInt(amount.textContent!, 10) - 1}`;
       this.setCurrentAmount(amount);
     }
   }
@@ -97,7 +105,7 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
   setRightTotalPriceDecimalPart(total: string): string {
     let newTotal = total;
     if (total.includes('.')) {
-      let decimalPart = total.slice(total.indexOf('.') + 1);
+      const decimalPart = total.slice(total.indexOf('.') + 1);
       if (decimalPart.length < 2) newTotal += '0';
     } else {
       newTotal += '.00';
@@ -110,7 +118,7 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
     const productId = target.parentElement?.parentElement!.id ?? '';
     const product = this.store
       .selectSnapshot(RSSState.goodsInCart)
-      .find((product) => productId === product.id)!;
+      .find((productInCart) => productId === productInCart.id)!;
     this.store.dispatch(new UpdateGoodsInCart([product]));
   }
 
@@ -154,11 +162,11 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
       const today = new Date();
       const deliveryDay = new Date(target.value);
       if (
-        today.getFullYear() <= deliveryDay.getFullYear() &&
-        today.getMonth() <= deliveryDay.getMonth() &&
-        ((today.getDate() <= deliveryDay.getDate() &&
-          today.getMonth() === deliveryDay.getMonth()) ||
-          today.getMonth() < deliveryDay.getMonth())
+        today.getFullYear() <= deliveryDay.getFullYear()
+        && today.getMonth() <= deliveryDay.getMonth()
+        && ((today.getDate() <= deliveryDay.getDate()
+          && today.getMonth() === deliveryDay.getMonth())
+          || today.getMonth() < deliveryDay.getMonth())
       ) {
         target.classList.remove('wrong-input');
         target.classList.add('right-input');
@@ -182,11 +190,11 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
 
   sendOrder(event: Event): void {
     if (
-      this.userName.nativeElement.classList.contains('right-input') &&
-      this.address.nativeElement.classList.contains('right-input') &&
-      this.tel.nativeElement.classList.contains('right-input') &&
-      this.date.nativeElement.classList.contains('right-input') &&
-      this.time.nativeElement.classList.contains('right-input')
+      this.userName.nativeElement.classList.contains('right-input')
+      && this.address.nativeElement.classList.contains('right-input')
+      && this.tel.nativeElement.classList.contains('right-input')
+      && this.date.nativeElement.classList.contains('right-input')
+      && this.time.nativeElement.classList.contains('right-input')
     ) {
       event.preventDefault();
       this.store.dispatch(new SetOrder([this.setOrderToSend()]));
@@ -218,9 +226,9 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
       .slice(0, -1)
       .map((tr) => tr.id);
     const amounts = Array.from(
-      document.querySelectorAll('.current-amount')
+      document.querySelectorAll('.current-amount'),
     ).map((amount) => +amount);
-    const items = ids.map((id, i) => ({ id: id, amount: amounts[i] }));
+    const items = ids.map((id, i) => ({ id, amount: amounts[i] }));
     const order: IOrder = {
       items,
       details: {

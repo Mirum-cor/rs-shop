@@ -20,6 +20,12 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
   @Select(RSSState.goodsInCart) public goodsInCart$!: Observable<IProduct[]>;
 
   @ViewChild('total') total: ElementRef = { nativeElement: '' };
+  @ViewChild('name') name: ElementRef = { nativeElement: '' };
+  @ViewChild('address') address: ElementRef = { nativeElement: '' };
+  @ViewChild('tel') tel: ElementRef = { nativeElement: '' };
+  @ViewChild('date') date: ElementRef = { nativeElement: '' };
+  @ViewChild('time') time: ElementRef = { nativeElement: '' };
+  @ViewChild('comment') comment: ElementRef = { nativeElement: '' };
 
   constructor(private store: Store) {}
 
@@ -101,5 +107,95 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
       .selectSnapshot(RSSState.goodsInCart)
       .find((product) => productId === product.id)!;
     this.store.dispatch(new UpdateGoodsInCart([product]));
+  }
+
+  isNameValid(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target.value.length >= 3 && target.value.length <= 50) {
+      target.classList.remove('wrong-input');
+      target.classList.add('right-input');
+    } else {
+      target.classList.remove('right-input');
+      target.classList.add('wrong-input');
+    }
+  }
+
+  isAddressValid(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target.value.length >= 3 && target.value.length <= 250) {
+      target.classList.remove('wrong-input');
+      target.classList.add('right-input');
+    } else {
+      target.classList.remove('right-input');
+      target.classList.add('wrong-input');
+    }
+  }
+
+  isTelValid(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const value = target.value.replace(/\D/g, '');
+    if (value.length === 12) {
+      target.classList.remove('wrong-input');
+      target.classList.add('right-input');
+    } else {
+      target.classList.remove('right-input');
+      target.classList.add('wrong-input');
+    }
+  }
+
+  isDateValid(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target.type === 'date') {
+      const today = new Date();
+      const deliveryDay = new Date(target.value);
+      if (
+        today.getFullYear() <= deliveryDay.getFullYear() &&
+        today.getMonth() <= deliveryDay.getMonth() &&
+        ((today.getDate() <= deliveryDay.getDate() &&
+          today.getMonth() === deliveryDay.getMonth()) ||
+          today.getMonth() < deliveryDay.getMonth())
+      ) {
+        target.classList.remove('wrong-input');
+        target.classList.add('right-input');
+      } else {
+        target.classList.remove('right-input');
+        target.classList.add('wrong-input');
+      }
+    }
+  }
+
+  isTimeValid(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target.value.length === 5) {
+      target.classList.remove('wrong-input');
+      target.classList.add('right-input');
+    } else {
+      target.classList.remove('right-input');
+      target.classList.add('wrong-input');
+    }
+  }
+
+  sendOrder(event: Event): void {
+    if (
+      this.name.nativeElement.classList.contains('right-input') &&
+      this.address.nativeElement.classList.contains('right-input') &&
+      this.tel.nativeElement.classList.contains('right-input') &&
+      this.date.nativeElement.classList.contains('right-input') &&
+      this.time.nativeElement.classList.contains('right-input')
+    ) {
+      event.preventDefault();
+      document.forms[0].reset();
+      this.name.nativeElement.classList = [];
+      this.address.nativeElement.classList = [];
+      this.tel.nativeElement.classList = [];
+      this.date.nativeElement.classList = [];
+      this.time.nativeElement.classList = [];
+    } else {
+      this.name.nativeElement.classList.add('wrong-input');
+      this.address.nativeElement.classList.add('wrong-input');
+      this.tel.nativeElement.classList.add('wrong-input');
+      this.date.nativeElement.classList.add('wrong-input');
+      this.time.nativeElement.classList.add('wrong-input');
+    }
   }
 }

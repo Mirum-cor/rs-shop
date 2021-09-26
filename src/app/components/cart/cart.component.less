@@ -119,6 +119,66 @@ tfoot td {
   text-align: center;
 }
 
+form {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input:not([type="submit"]) {
+  margin-bottom: 20px;
+  height: 30px;
+}
+
+
+textarea {
+  resize: none;
+  height: 115px;
+  margin-bottom: 20px;
+}
+
+input,
+textarea {
+  padding: 5px;
+  outline: none;
+  border: 1px solid #000000;
+  transition: all 0.25s linear;
+}
+
+input[type="submit"] {
+  margin: 0 auto;
+  width: 50%;
+  height: 50px;
+  border: none;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 25px;
+  letter-spacing: 3px;
+  box-shadow: 0 0 5px #8da595;
+  background-color: #a1beab;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #8da595;
+}
+
+.wrong-input {
+  color: #971c1c;
+  border-color: #971c1c;
+  background-color: rgba(155, 101, 101, 0.5);
+}
+
+.right-input {
+  color: #126112;
+  border-color: #126112;
+  background-color: rgba(108, 138, 108, 0.5);
+}
+
 @media screen and (max-width: 760px) {
   .description {
     display: none;

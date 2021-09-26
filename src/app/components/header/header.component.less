@@ -136,6 +136,11 @@
   box-shadow: 5px 5px 5px #3b744e;
 }
 
+.favorite-and-cart {
+  display: flex;
+  gap: 30px;
+}
+
 .favorite-and-cart a {
   position: relative;
   font-weight: 700;
@@ -173,6 +178,7 @@
   transition: all 0.25s linear;
 }
 
+.favorite-and-cart a.active-link::after,
 .favorite-and-cart a:hover::after,
 .categories-nav a.active-link:after,
 .categories-nav li:hover > a:not(.active-link):after {

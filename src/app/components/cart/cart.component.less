@@ -1,0 +1,131 @@
+.container {
+  padding: 50px 0;
+  min-height: calc(100vh - 419px);
+}
+
+h2 {
+  text-align: center;
+  font-size: 32px;
+  line-height: 35px;
+  margin-bottom: 50px;
+}
+
+.cart-goods-wrapper {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 30px;
+}
+
+table {
+  width: 100%;
+}
+
+th,
+td {
+  padding: 5px;
+  text-align: center;
+}
+
+// TODO: Refactor rools
+
+.name {
+  width: 25%;
+}
+
+.image {
+  width: 10%;
+}
+
+.description {
+  width: 25%;
+}
+
+.price {
+  width: 10%;
+}
+
+.amount {
+  width: 10%;
+}
+
+.product-total {
+  width: 10%;
+}
+
+.remove {
+  width: 5%;
+}
+
+.name a {
+  transition: all 0.25s linear;
+}
+
+.name a:hover {
+  color: #224e31;
+}
+
+.image img {
+  max-width: auto;
+  max-height: 75px;
+}
+
+.amount {
+  user-select: none;
+}
+
+.less,
+.more {
+  width: 20px;
+  height: 20px;
+  font-weight: 700;
+  background-color: #a1beab;
+  cursor: pointer;
+  transition: all 0.25s linear;
+}
+
+.less:hover,
+.more:hover {
+  background-color: #8da595;
+}
+
+.current-amount {
+  margin: 0 5px;
+  width: 30px;
+}
+
+.less,
+.more,
+.current-amount {
+  display: inline-block;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+.remove span {
+  display: inline-block;
+  width: 20px;
+  height: 22px;
+  background: url(../../../assets/trash.svg) no-repeat center;
+  background-size: 20px 22px;
+  cursor: pointer;
+  transition: all 0.25s linear;
+}
+
+.remove span:hover {
+  background: url(../../../assets/trash-hover.svg) no-repeat center;
+  background-size: 20px 22px;
+}
+
+tfoot td {
+  text-align: right;
+  font-weight: 700;
+}
+
+.no-favorites {
+  font-size: 18px;
+  line-height: 20px;
+  text-align: center;
+}
+

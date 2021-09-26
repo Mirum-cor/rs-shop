@@ -10,4 +10,5 @@ export interface IProduct {
   isFavorite?: boolean;
   category?: string;
   subCategory?: string;
+  amountInCart?: number;
 }

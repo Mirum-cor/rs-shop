@@ -85,7 +85,7 @@ export class ProductComponent implements OnInit, AfterViewChecked {
       for (let i = 1; i <= this.product.rating; i++) {
         const img = document.createElement('img');
         img.src = '../../../assets/rate-star.svg';
-        img.alt = 'rate-star';
+        img.alt = 'Звезда рейтинга';
         this.rating.nativeElement.append(img);
       }
     }
@@ -127,7 +127,7 @@ export class ProductComponent implements OnInit, AfterViewChecked {
   }
 
   addToCart(): void {
-    this.product = { ...this.product, isInCart: true };
+    this.product = { ...this.product, isInCart: true, amountInCart: 1 };
     this.store.dispatch(new SetGoodsInCart([this.product]));
   }
 

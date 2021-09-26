@@ -1,0 +1,48 @@
+<div class="container">
+  <h2>Корзина</h2>
+  <div
+    class="cart-goods-wrapper"
+    *ngIf="(goodsInCart$ | async)?.length; else noGoodsInCart"
+  >
+    <table>
+      <thead>
+        <th class="name">Название</th>
+        <th class="image">Фото</th>
+        <th class="description">Описание</th>
+        <th class="price">Цена</th>
+        <th class="amount">Количество</th>
+        <th class="product-total">Сумма</th>
+        <th class="remove">Удалить</th>
+      </thead>
+      <tbody *ngFor="let product of goodsInCart$ | async">
+        <tr>
+          <td class="name">
+            <a [routerLink]="['/product', product.id]">{{ product.name }}</a>
+          </td>
+          <td class="image">
+            <img src="{{ product.imageUrls[0] }}" alt="Фото товара" />
+          </td>
+          <td class="description">
+            {{ product.description | slice: 0:100 }}...
+          </td>
+          <td class="price">{{ product.price }} руб.</td>
+          <td class="amount">
+            <span class="less">-</span>
+            <span class="current-amount">1</span>
+            <span class="more">+</span>
+          </td>
+          <td class="product-total"></td>
+          <td class="remove"><span></span></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="7">Итого: <span class="total"></span></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <ng-template #noGoodsInCart>
+    <p class="no-favorites">У Вас пока нет товаров в корзине</p>
+  </ng-template>
+</div>

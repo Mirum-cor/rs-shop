@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { FavoritePageComponent } from './components/favorite-page/favorite-page.component';
+import { CartComponent } from './components/cart/cart.component';
 import { ProductCategoryComponent } from './components/product-category/product-category.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { ProductComponent } from './components/product/product.component';
@@ -24,6 +25,7 @@ import { RSSState } from './store/rss.state';
     HeaderComponent,
     MainPageComponent,
     FavoritePageComponent,
+    CartComponent,
     ProductCategoryComponent,
     ProductCardComponent,
     ProductComponent,
@@ -41,4 +43,4 @@ import { RSSState } from './store/rss.state';
   providers: [DataService],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

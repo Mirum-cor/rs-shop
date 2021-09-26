@@ -10,7 +10,13 @@ html {
   scroll-behavior: smooth;
 }
 
+body {
+  position: relative;
+  display: flex;
+}
+
 body,
+button,
 input,
 textarea {
   font-family: 'Merriweather', serif;
@@ -43,4 +49,9 @@ a {
 .visible {
   opacity: 1;
   z-index: 5;
+}
+
+.visible-login-form {
+  opacity: 1;
+  z-index: 15;
 }

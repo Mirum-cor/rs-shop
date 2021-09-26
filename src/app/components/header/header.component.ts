@@ -1,11 +1,14 @@
-import {
-  Component, ViewChild, ElementRef, OnInit,
-} from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { ICategory } from 'src/app/services/category.interface';
+import { DataService } from 'src/app/services/data.service';
 import { IProduct } from 'src/app/services/product.interface';
-import { GetCategories, GetCurrentCategory, GetCurrentCategoryGoods } from 'src/app/store/rss.action';
+import {
+  GetCategories,
+  GetCurrentCategory,
+  GetCurrentCategoryGoods,
+} from 'src/app/store/rss.action';
 import { RSSState } from 'src/app/store/rss.state';
 
 @Component({
@@ -22,11 +25,25 @@ export class HeaderComponent implements OnInit {
 
   @ViewChild('biggestCities') biggestCities: ElementRef = { nativeElement: '' };
 
+  @ViewChild('loginForm') loginForm: ElementRef = { nativeElement: '' };
+
+  @ViewChild('name') name: ElementRef = { nativeElement: '' };
+
+  @ViewChild('password') password: ElementRef = { nativeElement: '' };
+
   @Select(RSSState.categories) public categories$!: Observable<ICategory[]>;
-  @Select(RSSState.favoriteGoods) public favoriteGoods$!: Observable<IProduct[]>;
+  @Select(RSSState.favoriteGoods) public favoriteGoods$!: Observable<
+    IProduct[]
+  >;
   @Select(RSSState.goodsInCart) public goodsInCart$!: Observable<IProduct[]>;
 
-  constructor(private store: Store) {}
+  currentUser: string;
+
+  constructor(private store: Store, private dataService: DataService) {
+    this.currentUser = localStorage.getItem('currentUser')
+      ? JSON.parse(localStorage.getItem('currentUser')!).token
+      : '';
+  }
 
   ngOnInit(): void {
     this.store.dispatch(new GetCategories([]));
@@ -48,14 +65,16 @@ export class HeaderComponent implements OnInit {
 
   getCurrentCity([lat, lng]: string[]): void {
     fetch(
-      `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=81aaf0c0775f440885be1a9e23fdc1ea`,
+      `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=81aaf0c0775f440885be1a9e23fdc1ea`
     )
       .then((responce) => {
-        if (!responce.ok) throw new Error(`Problem with geocoding ${responce.status}!`);
+        if (!responce.ok)
+          throw new Error(`Problem with geocoding ${responce.status}!`);
         return responce.json();
       })
       .then((data) => {
-        this.currentCity.nativeElement.textContent = data.results[0].components.city;
+        this.currentCity.nativeElement.textContent =
+          data.results[0].components.city;
       })
       // eslint-disable-next-line no-console
       .catch((err) => console.log(err));
@@ -94,6 +113,70 @@ export class HeaderComponent implements OnInit {
     this.biggestCities.nativeElement.classList.add('invisible');
     this.biggestCities.nativeElement.classList.remove('visible');
     event.stopPropagation();
+  }
+
+  login(): void {
+    this.loginForm.nativeElement.classList.remove('invisible-login-form');
+    this.loginForm.nativeElement.classList.add('visible-login-form');
+  }
+
+  logout(): void {
+    localStorage.removeItem('currentUser');
+    this.currentUser = '';
+  }
+
+  validateName(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target.value.length >= 3 && target.value.length <= 50) {
+      target.classList.remove('wrong-input');
+      target.classList.add('right-input');
+    } else {
+      target.classList.remove('right-input');
+      target.classList.add('wrong-input');
+    }
+  }
+
+  validatePassword(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target.value.length >= 3 && target.value.length <= 10) {
+      target.classList.remove('wrong-input');
+      target.classList.add('right-input');
+    } else {
+      target.classList.remove('right-input');
+      target.classList.add('wrong-input');
+    }
+  }
+
+  confirmLogin(event: Event): void {
+    event.preventDefault();
+    if (
+      this.name.nativeElement.classList.contains('right-input') &&
+      this.password.nativeElement.classList.contains('right-input')
+    ) {
+      this.name.nativeElement.classList.remove('right-input');
+      this.password.nativeElement.classList.remove('right-input');
+      this.name.nativeElement.classList.remove('wrong-input');
+      this.password.nativeElement.classList.remove('wrong-input');
+      this.loginForm.nativeElement.classList.remove('visible-login-form');
+      this.loginForm.nativeElement.classList.add('invisible-login-form');
+      this.dataService
+      .getToken(
+        this.name.nativeElement.value,
+        this.password.nativeElement.value
+        )
+        .subscribe((data) => {
+          localStorage.setItem('currentUser', JSON.stringify(data));
+          console.log(data);
+          this.currentUser = JSON.parse(JSON.stringify(data)).token;
+          console.log(this.currentUser);
+        });
+      document.forms[0].reset();
+    } else {
+      this.name.nativeElement.classList.remove('right-input');
+      this.password.nativeElement.classList.remove('right-input');
+      this.name.nativeElement.classList.add('wrong-input');
+      this.password.nativeElement.classList.add('wrong-input');
+    }
   }
 
   getCategoryID(event: Event): void {

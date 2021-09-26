@@ -54,6 +54,14 @@
           ></a
         >
       </div>
+      <div class="log-btn">
+        <button *ngIf="!currentUser; else logoutBlock" (click)="login()">
+          Войти
+        </button>
+        <ng-template #logoutBlock>
+          <button (click)="logout()">Выйти</button>
+        </ng-template>
+      </div>
     </div>
     <div class="categories-nav">
       <ul>
@@ -70,4 +78,31 @@
       </ul>
     </div>
   </div>
+</div>
+<div class="login-form invisible" #loginForm>
+  <form>
+    <label for="name">Имя</label>
+    <input
+      type="text"
+      name="name"
+      id="name"
+      placeholder="Введите Ваше имя"
+      minlength="3"
+      maxlength="50"
+      (blur)="validateName($event)"
+      #name
+    />
+    <label for="password">Пароль</label>
+    <input
+      type="password"
+      name="password"
+      id="password"
+      placeholder="Введите пароль"
+      minlength="3"
+      maxlength="10"
+      (blur)="validatePassword($event)"
+      #password
+    />
+    <input type="submit" value="Войти" class="confirm-login" (click)="confirmLogin($event)">
+  </form>
 </div>

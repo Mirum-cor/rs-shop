@@ -28,4 +28,14 @@ export class DataService {
     const responseUrl = `${ROOT_REQUEST_URL}/goods/item/${productId}`;
     return this.http.get(responseUrl);
   }
+
+  getToken(login: string, password: string) {
+    const responseUrl = `${ROOT_REQUEST_URL}/users/register`;
+    return this.http.post(responseUrl, {
+      firstName: '',
+      lastName: '',
+      login,
+      password
+    });
+  }
 }

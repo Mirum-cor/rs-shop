@@ -54,7 +54,7 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
 
   setEachProductCurrentAmount(): void {
     const currentAmounts: HTMLElement[] = Array.from(
-      document.querySelectorAll('.current-amount')
+      document.querySelectorAll('.current-amount'),
     );
     currentAmounts.forEach((currentAmount) => {
       this.setCurrentAmount(currentAmount);
@@ -162,11 +162,11 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
       const today = new Date();
       const deliveryDay = new Date(target.value);
       if (
-        today.getFullYear() <= deliveryDay.getFullYear() &&
-        today.getMonth() <= deliveryDay.getMonth() &&
-        ((today.getDate() <= deliveryDay.getDate() &&
-          today.getMonth() === deliveryDay.getMonth()) ||
-          today.getMonth() < deliveryDay.getMonth())
+        today.getFullYear() <= deliveryDay.getFullYear()
+        && today.getMonth() <= deliveryDay.getMonth()
+        && ((today.getDate() <= deliveryDay.getDate()
+          && today.getMonth() === deliveryDay.getMonth())
+          || today.getMonth() < deliveryDay.getMonth())
       ) {
         target.classList.remove('wrong-input');
         target.classList.add('right-input');
@@ -190,11 +190,11 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
 
   sendOrder(event: Event): void {
     if (
-      this.userName.nativeElement.classList.contains('right-input') &&
-      this.address.nativeElement.classList.contains('right-input') &&
-      this.tel.nativeElement.classList.contains('right-input') &&
-      this.date.nativeElement.classList.contains('right-input') &&
-      this.time.nativeElement.classList.contains('right-input')
+      this.userName.nativeElement.classList.contains('right-input')
+      && this.address.nativeElement.classList.contains('right-input')
+      && this.tel.nativeElement.classList.contains('right-input')
+      && this.date.nativeElement.classList.contains('right-input')
+      && this.time.nativeElement.classList.contains('right-input')
     ) {
       event.preventDefault();
       this.store.dispatch(new SetOrder([this.setOrderToSend()]));
@@ -227,7 +227,7 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
       .slice(0, -1)
       .map((tr) => tr.id);
     const amounts = Array.from(
-      document.querySelectorAll('.current-amount')
+      document.querySelectorAll('.current-amount'),
     ).map((amount) => +amount.textContent!);
     const names = Array.from(document.querySelectorAll('.name'))
       .slice(1)
@@ -241,13 +241,12 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
       price: prices[i],
       name: names[i],
     }));
-    console.log(items);
     const order: IOrder = {
       items,
       details: {
         name: this.userName.nativeElement.value,
         address: this.address.nativeElement.value,
-        phone: '+' + this.tel.nativeElement.value,
+        phone: `+${this.tel.nativeElement.value}`,
         timeToDeliver: `${this.date.nativeElement.value}, ${this.time.nativeElement.value}`,
         comment: this.comment.nativeElement.value,
         totalPrice: +parseFloat(this.total.nativeElement.textContent),

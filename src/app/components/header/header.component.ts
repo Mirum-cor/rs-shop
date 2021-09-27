@@ -12,6 +12,7 @@ import {
   GetCurrentCategoryGoods,
   SetFavoriteGoods,
   SetGoodsInCart,
+  SetOrder,
 } from 'src/app/store/rss.action';
 import { RSSState } from 'src/app/store/rss.state';
 
@@ -43,6 +44,8 @@ export class HeaderComponent implements OnInit {
 
   @Select(RSSState.goodsInCart) public goodsInCart$!: Observable<IProduct[]>;
 
+  @Select(RSSState.orders) public orders$!: Observable<IProduct[]>;
+
   currentUser: string;
 
   constructor(private store: Store, private dataService: DataService) {
@@ -60,8 +63,12 @@ export class HeaderComponent implements OnInit {
     const goodsInCart = localStorage.getItem('goodsInCart')
       ? JSON.parse(localStorage.getItem('goodsInCart')!)
       : [];
+    const orders = localStorage.getItem('orders')
+      ? JSON.parse(localStorage.getItem('orders')!)
+      : [];
     this.store.dispatch(new SetFavoriteGoods(favoriteGoods));
     this.store.dispatch(new SetGoodsInCart(goodsInCart));
+    this.store.dispatch(new SetOrder(orders));
   }
 
   getCurrentLocation(): void {

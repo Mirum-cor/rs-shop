@@ -11,6 +11,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { FavoritePageComponent } from './components/favorite-page/favorite-page.component';
 import { CartComponent } from './components/cart/cart.component';
+import { OrdersComponent } from './components/orders/orders.component';
 import { ProductCategoryComponent } from './components/product-category/product-category.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { ProductComponent } from './components/product/product.component';
@@ -26,6 +27,7 @@ import { RSSState } from './store/rss.state';
     MainPageComponent,
     FavoritePageComponent,
     CartComponent,
+    OrdersComponent,
     ProductCategoryComponent,
     ProductCardComponent,
     ProductComponent,

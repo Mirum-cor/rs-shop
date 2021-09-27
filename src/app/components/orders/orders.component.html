@@ -1,0 +1,36 @@
+<div class="container">
+  <h2>Заказы</h2>
+  <div class="orders" *ngIf="(orders$ | async)?.length; else noOrders">
+    <div
+      class="order-wrapper"
+      *ngFor="let order of orders$ | async; let i = index"
+    >
+      <p class="order-num" (click)="toggleDetails($event)">
+        Заказ №{{ i + 1 }}
+      </p>
+      <div class="order-details" style="display: none">
+        <p><span>Имя:</span> {{ order.details.name }}</p>
+        <p><span>Адрес:</span> {{ order.details.address }}</p>
+        <p><span>Телефон:</span> {{ order.details.phone }}</p>
+        <p><span>Время доставки:</span> {{ order.details.timeToDeliver }}</p>
+        <p><span>Комментарий:</span> {{ order.details.comment }}</p>
+        <p><span>Заказ:</span></p>
+        <div
+          class="order-item"
+          *ngFor="let product of order.items; let j = index"
+        >
+          <p>{{ j + 1 }}) <span>Название:</span> {{ product.name }}</p>
+          <p><span>Количество:</span> {{ product.amount }}</p>
+          <p>
+            <span>Стоимость:</span>
+            {{ product.price | number: "1.2" }}&nbsp;руб.
+          </p>
+        </div>
+        <p><span>К оплате:</span> {{ order.details.totalPrice | number: "1.2" }} руб.</p>
+      </div>
+    </div>
+  </div>
+  <ng-template #noOrders>
+    <p class="no-favorites">У Вас пока нет заказов</p>
+  </ng-template>
+</div>

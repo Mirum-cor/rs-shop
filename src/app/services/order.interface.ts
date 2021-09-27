@@ -2,6 +2,8 @@ export interface IOrder {
   items: {
     id: string;
     amount: number;
+    price: number;
+    name: string;
   }[];
   details: {
     name: string;
@@ -9,5 +11,6 @@ export interface IOrder {
     phone: string;
     timeToDeliver: string;
     comment: string;
+    totalPrice: number;
   };
 }

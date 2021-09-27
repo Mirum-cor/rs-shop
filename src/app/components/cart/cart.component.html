@@ -98,7 +98,7 @@
       <label for="comment">Комментарий к заказу</label>
       <textarea name="comment" id="comment" maxlength="250" #comment></textarea>
       <input type="submit" value="Заказать" (click)="sendOrder($event)" />
-      <h3 class="order-sent" #orderSent>Заказ отправлен!</h3>
+      <h3 class="order-sent invisible" #orderSent>Заказ отправлен!</h3>
     </form>
   </div>
   <ng-template #noGoodsInCart>

@@ -200,9 +200,10 @@ export class CartComponent implements AfterViewInit, AfterViewChecked {
       this.store.dispatch(new SetOrder([this.setOrderToSend()]));
       this.orderSent.nativeElement.classList.remove('invisible');
       this.orderSent.nativeElement.classList.add('visible');
-      document.body.classList.add('not-scrollable');
-      this.resetForm();
-      this.store.dispatch(new ResetGoodsInCart([]));
+      setTimeout(() => {
+        this.resetForm();
+        this.store.dispatch(new ResetGoodsInCart([]));
+      }, 1500);
     } else {
       this.userName.nativeElement.classList.add('wrong-input');
       this.address.nativeElement.classList.add('wrong-input');
